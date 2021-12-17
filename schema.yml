@@ -1,0 +1,236 @@
+title: "OCI Template example"
+description: "OCI Template"
+stackDescription: "OCI Template"
+schemaVersion: 1.1.0
+version: "20201125"
+locale: "en"
+
+variableGroups:
+- title: "General Configuration"
+  visible: false
+  variables:
+  - tenancy_ocid
+  - user_ocid
+  - fingerprint
+  - private_key_path
+  - region
+  
+
+- title: "Required Configuration"
+  visible: true  
+  variables:
+  - customer_label
+  - show_advanced 
+  
+- title: "Networking  Configuration"
+  visible: 
+      and:
+        - show_advanced
+  variables:
+  - ip_vcn
+  - ip_sub_lb_int
+  - ip_sub_fss
+  - ip_sub_dmz
+  - ip_sub_app
+  - ip_sub_db
+  - v1proxy
+  - domain
+
+
+- title: "Tags"
+  visible: 
+      and:
+        - show_advanced
+  variables:
+  - StackName
+  - StackOwner
+  - ProjectName
+  - BillingOwner
+  - Workload
+  - CostCentre
+  - Environment
+  - CompartmentName
+  
+
+variables:
+
+  show_advanced:
+    type: boolean
+    title: "Show advanced options?"
+    description: "Shows advanced options."
+    visible: true
+    default: false
+
+
+  # General Configuration
+  tenancy_ocid:
+    title: "Tenancy ID"
+    description: "The Oracle Cloud Identifier (OCID) for your tenancy"
+    type: string
+    required: true
+    visibile: false
+
+  region:
+    title: "Region"
+    description: "Choose Region where you deploy your application"
+    type: oci:identity:region:name
+    required: true
+    visibile: true
+  
+  customer_label:
+    title: "customer label"
+    description: "Label used as a prefix for naming resources"
+    type: string
+    required: true
+    visible: true
+  
+  
+
+  # Network Configuration
+
+  ip_vcn:
+    type: string
+    required: false
+    default: "10.199.0.0/22"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "VCN CIDR"
+    description: "Choose single, contiguous IPv4 CIDR block for the VCN"
+  
+  ip_sub_lb_int:
+    type: string
+    required: false
+    default: "10.199.0.0/26"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP - Prod External"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  ip_sub_fss:
+    type: string
+    required: false
+    default: "10.199.0.64/26"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP - Prod Application"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  ip_sub_dmz:
+    type: string
+    required: false
+    default: "10.199.1.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP - Prod Database"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  ip_sub_app:
+    type: string
+    required: false
+    default: "10.199.2.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP- NonProd Application"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  ip_sub_db:
+    type: string
+    required: false
+    default: "10.199.3.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP- NonProd Database"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  v1proxy: 
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "CIDR Blocks for Exadata VCNs Client Subnets (Must not overlap with 192.168.128.0/20)"
+    description: "List of CIDR blocks for the client subnets of Exadata Cloud Service VCNs, in CIDR notation. Each provided CIDR value relates to one and only one VCN, the 'nth' value applying to the 'nth' value in 'CIDR blocks for Exadata VCNs'. (Type the CIDR and hit enter to enter multiple values, up to a maximum of 9)"
+
+  domain: 
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "CIDR Blocks for Exadata VCNs Client Subnets (Must not overlap with 192.168.128.0/20)"
+    description: "List of CIDR blocks for the client subnets of Exadata Cloud Service VCNs, in CIDR notation. Each provided CIDR value relates to one and only one VCN, the 'nth' value applying to the 'nth' value in 'CIDR blocks for Exadata VCNs'. (Type the CIDR and hit enter to enter multiple values, up to a maximum of 9)"
+
+
+
+  #Tags
+
+  StackName:
+    type: string
+    required: false
+    default: " "
+    title: "Stackname"
+    description: "Tags"
+
+  StackOwner:
+    type: string
+    required: false
+    default: " "
+    title: "Stackowner"
+    description: "Tags"
+
+  ProjectName:
+    type: string
+    required: false
+    default: " "
+    title: "ProjectName"
+    description: "Tags"
+
+  BillingOwner:
+    type: string
+    required: false
+    default: " "
+    title: "BillingOwner"
+    description: "Tags"
+
+  Workload:
+    type: string
+    required: false
+    default: " "
+    title: "WorkLoad"
+    description: "Tags"
+
+  CostCentre:
+    type: string
+    required: false
+    default: " "
+    title: "CostCentre"
+    description: "Tags"
+
+  CompartmentName:
+    type: string
+    required: false
+    default: " "
+    title: "Compartment Name"
+    description: "Tags"
+
+  Environment:
+    type: string
+    required: false
+    default: " "
+    title: "Environment"
+    description: "Tags"
+
+  
+outputs:
+
+  generated_ssh_private_key:
+    title: "Generated SSH Private Key"
+    displayText: "Generated SSH Private Key"
+    type: string
+    visible: true
+  
+  FoggyKitchenWebserver1PublicIP:
+    title: " Public IP"
+    displayText: " Public IP"
+    type: copyableString
+    visible: true
+
+ 
