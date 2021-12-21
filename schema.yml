@@ -28,29 +28,34 @@ variableGroups:
         - show_advanced
   variables:
   - ip_vcn
-  - ip_sub_lb_int
-  - ip_sub_fss
   - ip_sub_dmz
   - ip_sub_app
-  - ip_sub_db
   - v1proxy
   - domain
 
-
-- title: "Tags"
+- title: "Database Configuration"
   visible: 
       and:
         - show_advanced
   variables:
-  - StackName
-  - StackOwner
-  - ProjectName
-  - BillingOwner
-  - Workload
-  - CostCentre
-  - Environment
-  - CompartmentName
-  
+  - data_storage_size_in_gb
+  - db_shapes
+  - db_shape_ocpu
+  - ssh_key_db
+
+- title: "Compute  Configuration"
+  visible: 
+      and:
+        - show_advanced
+  variables:
+  - availablity_domain
+  - shape_ocpus
+  - shape_mem
+  - backup_policy
+  - boot_volume_size_in_gbs
+  - instance_shape
+  - ssh_key
+ 
 
 variables:
 
@@ -96,21 +101,6 @@ variables:
     title: "VCN CIDR"
     description: "Choose single, contiguous IPv4 CIDR block for the VCN"
   
-  ip_sub_lb_int:
-    type: string
-    required: false
-    default: "10.199.0.0/26"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-    title: "Subnet IP - Prod External"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
-
-  ip_sub_fss:
-    type: string
-    required: false
-    default: "10.199.0.64/26"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-    title: "Subnet IP - Prod Application"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
   ip_sub_dmz:
     type: string
@@ -128,14 +118,6 @@ variables:
     title: "Subnet IP- NonProd Application"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
-  ip_sub_db:
-    type: string
-    required: false
-    default: "10.199.3.0/24"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-    title: "Subnet IP- NonProd Database"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
-
   v1proxy: 
     type: array
     items:
@@ -144,8 +126,8 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for Exadata VCNs Client Subnets (Must not overlap with 192.168.128.0/20)"
-    description: "List of CIDR blocks for the client subnets of Exadata Cloud Service VCNs, in CIDR notation. Each provided CIDR value relates to one and only one VCN, the 'nth' value applying to the 'nth' value in 'CIDR blocks for Exadata VCNs'. (Type the CIDR and hit enter to enter multiple values, up to a maximum of 9)"
+    title: "CIDR Blocks for v1proxy"
+    description: "CIDR Blocks for v1proxy"
 
   domain: 
     type: array
@@ -155,82 +137,126 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for Exadata VCNs Client Subnets (Must not overlap with 192.168.128.0/20)"
-    description: "List of CIDR blocks for the client subnets of Exadata Cloud Service VCNs, in CIDR notation. Each provided CIDR value relates to one and only one VCN, the 'nth' value applying to the 'nth' value in 'CIDR blocks for Exadata VCNs'. (Type the CIDR and hit enter to enter multiple values, up to a maximum of 9)"
+    title: "CIDR Blocks for domain)"
+    description: "CIDR Blocks for v1proxy"
 
 
+# Compute Configuration
+  
+  availablity_domain:
+    type: enum
+    required: true
+    visibile: true
+    title: "Availability Domain to be chosen"
+    description: "Choose Availability Domain where your application will be deployed."
+    default: "3"
+    enum:
+      - "1"
+      - "2"
+      - "3"
 
-  #Tags
-
-  StackName:
-    type: string
+  instance_shape:
+    type: oci:core:instanceshape:name
+    title: "Instance Shape"
+    description: "Choose a shape for your instance"
+    default: "VM.Standard.E2.1"
     required: false
-    default: " "
-    title: "Stackname"
-    description: "Tags"
+    dependsOn:
+      compartmentId: ${compartment_ocid}
 
-  StackOwner:
-    type: string
+  shape_ocpus:
+    type: number
     required: false
-    default: " "
-    title: "Stackowner"
-    description: "Tags"
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 2
+    title: " Shape OCPUs"
+    description: "Choose number of OCPUs for Shape."
 
-  ProjectName:
-    type: string
+  shape_mem:
+    type: number
     required: false
-    default: " "
-    title: "ProjectName"
-    description: "Tags"
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 16
+    title: " Shape Memory (GB)"
+    description: "Choose number GB for Shape Memory."
 
-  BillingOwner:
-    type: string
+  backup_policy:
+    type: enum
     required: false
-    default: " "
-    title: "BillingOwner"
-    description: "Tags"
+    title: "backup policy"
+    description: "choose backup policy for instances"
+    default: "silver"
+    enum:
+      - "silver"
+      - "bronze"
+      - "gold"
+  
+  boot_volume_size_in_gbs:
+    type: number
+    required: false
+    multipleOf: 1
+    default: 100
+    title: " Shape Memory (GB)"
+    description: "Choose number GB for Shape Memory."
 
-  Workload:
-    type: string
-    required: false
-    default: " "
-    title: "WorkLoad"
-    description: "Tags"
+  ssh_key:
+    title: SSH Public Key
+    description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
+    # renders variable as an SSH key control
+    type: oci:core:ssh:publickey
+    required: true
 
-  CostCentre:
-    type: string
+ # DB Configuration
+  
+  data_storage_size_in_gb:
+    type: number
     required: false
-    default: " "
-    title: "CostCentre"
-    description: "Tags"
+    default: 100
+    title: "Database storage size in GB"
+    description: "Choose database storage size in GB for your DBSystem."
 
-  CompartmentName:
-    type: string
+  db_shape:
+    type: enum
     required: false
-    default: " "
-    title: "Compartment Name"
-    description: "Tags"
+    default: "VM.Standard2.2"
+    title: "DB System Shape"
+    description: "Choose the shape for your DBSystem."
+    enum:
+      - "VM.Standard1.2"
+      - "VM.Standard2.1"
+      - "VM.Standard1.2"
+      - "VM.Standard2.2"
+      - "VM.Standard1.4"
+      - "VM.Standard2.4"
+      - "VM.Standard1.8"
+      - "VM.Standard2.8"
+      - "VM.Standard1.16"
+      - "VM.Standard2.2"
+      - "VM.Standard2.16"
+      - "VM.Standard2.24"
+      - "BM.DenseIO2.52"
+      - "BM.DenseIO1.36" 
 
-  Environment:
-    type: string
+
+  ssh_key_db:
+    title: SSH Public Key
+    description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
+    # renders variable as an SSH key control
+    type: oci:core:ssh:publickey
+    required: true
+
+  db_shape_ocpus:
+    type: number
     required: false
-    default: " "
-    title: "Environment"
-    description: "Tags"
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 2
+    title: " Shape OCPUs"
+    description: "Choose number of OCPUs for Shape."
 
   
-outputs:
-
-  generated_ssh_private_key:
-    title: "Generated SSH Private Key"
-    displayText: "Generated SSH Private Key"
-    type: string
-    visible: true
-  
-  FoggyKitchenWebserver1PublicIP:
-    title: " Public IP"
-    displayText: " Public IP"
-    type: copyableString
-    visible: true
-
- 

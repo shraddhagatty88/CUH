@@ -271,3 +271,48 @@ locals {
 }
 
 ############################################################################
+
+#SSH Keys
+variable "ssh_key_db" {}
+variable "ssh_key" {}
+
+#Compute Specific
+variable "availablity_domain_name" {
+  default = "3"
+}
+variable "shape_ocpus" {
+  default = 2
+}
+variable "shape_mem" {
+  default = 16
+}
+variable "boot_volume_size_in_gbs" {
+  default = 100
+}
+variable "backup_policy" {
+  default = "silver"
+}
+variable instance_shape {
+    default = "VM.Standard.E2.1"
+}
+
+#DB Specific
+shape                   = var.db_shapes
+  shape_ocpus             = var.db_shape_ocpus
+  shape_mem               = var.db_shape_mem
+
+variable "db_shapes" {
+  
+}
+
+variable "db_shape_ocpus" {
+  
+}
+
+variable "db_shape_mem" {
+  
+}
+
+variable "data_storage_size_in_gb" {
+  
+}

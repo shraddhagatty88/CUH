@@ -2,33 +2,26 @@
 # TEST - EBS International Database:
 ############################################################################
 
-module "instance_test_ebs_intl_db" {
+module "instance_test_db1" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
-  display_name            = "ocieitebsdb"
-  vnic_hostname_label     = "ocieitebsdb"
-  shape                   = local.shapes["e3"]
-  shape_ocpus             = 4
-  shape_mem               = 33
+  display_name            = "${var.customer_label}db1"
+  vnic_hostname_label     = "${var.customer_label}db1"
+  shape                   = var.db_shapes
+  shape_ocpus             = var.db_shape_ocpus
+  shape_mem               = var.db_shape_mem
   availability_domain     = 2
   fault_domain            = 3
-  compartment_id          = data.terraform_remote_state.common_services.outputs.nprd_services_compartment_id
-  subnet_id               = data.terraform_remote_state.common_services.outputs.nprd_subnet_db_id
-  network_sec_groups      = [data.terraform_remote_state.common_services.outputs.nsg_nprd_common_id
-                            ,data.terraform_remote_state.common_services.outputs.nsg_nprd_db_id
-                            ,data.terraform_remote_state.common_services.outputs.nsg_nprd_wood_access_id
-                            ,data.terraform_remote_state.common_services.outputs.nsg_nprd_v1_vpn_id]
-  ssh_authorized_keys     = file(local.ssh_keys["nprd"])
-  source_id               = data.oci_core_images.v1_oel79_golden_image_ebs_sit.images[0].id
-  boot_volume_size_in_gbs = 100
+  compartment_id          = module.iam.compartments["prod_services"]
+  subnet_id               = module.vcn.subnets["vcn1_sub_private"]
+  network_sec_groups      = [module.oci_core_network_security_group.nsg_prod_common.id, module.oci_core_network_security_group.nsg_v1_vpn.id]                     
+  ssh_authorized_keys     = var.ssh_key_db
+  source_id               = "ocid1.image.oc1.uk-london-1.aaaaaaaahm2udvgllrsptv6q3afrduo6tpuqa2ti6fcst5gt3myc7zsfocmq"
+  boot_volume_size_in_gbs = var.data_storage_size_in_gb
   assign_public_ip        = false
   boot_backup_policy      = "silver"
-  private_ip              = [local.ips.instances["ebs_intl_test_db"]]
-  defined_tags            = merge(
-                            local.tags["nprd_ebs_intl"]
-                            ,map("Schedule.AnyDay", "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1") # TMP: ON (24x7)
-                            # ,map("Schedule.WeekDay", "1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1") # BAU: ON (M-F 6-6)
-                            )
+  #private_ip              = [local.ips.instances["ebs_intl_test_db"]]
+  #defined_tags            = local.tags
 }
 
 ############################################################################
