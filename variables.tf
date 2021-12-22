@@ -12,6 +12,7 @@ variable "tenancy_ocid" {}
 #variable "private_key_path" {}
 variable "region" {}
 variable "customer_label" {}
+variable "compartment_id" {}
 
 ############################################################################
 # IAM:

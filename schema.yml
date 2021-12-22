@@ -20,6 +20,7 @@ variableGroups:
   visible: true  
   variables:
   - customer_label
+  - compartment_id
   - show_advanced 
   
 - title: "Networking  Configuration"
@@ -42,6 +43,7 @@ variableGroups:
   - db_shapes
   - db_shape_ocpu
   - ssh_key_db
+  - db_shape_mem
 
 - title: "Compute  Configuration"
   visible: 
@@ -88,6 +90,14 @@ variables:
     type: string
     required: true
     visible: true
+
+  compartment_id:
+    title: "Compartment OCID"
+    description: "Choose Comparment where you deploy your Webserver"
+    type: oci:identity:compartment:id
+    required: true
+    visibile: true
+  
   
   
 
@@ -107,7 +117,7 @@ variables:
     required: false
     default: "10.199.1.0/24"
     pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-    title: "Subnet IP - Prod Database"
+    title: "Subnet IP - DMZ"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
   ip_sub_private:
@@ -115,7 +125,7 @@ variables:
     required: false
     default: "10.199.2.0/24"
     pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
-    title: "Subnet IP- NonProd Application"
+    title: "Subnet IP- PRIVATE"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
   v1proxy: 
@@ -137,7 +147,7 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for domain)"
+    title: "CIDR Blocks for domain"
     description: "CIDR Blocks for v1proxy"
 
 
@@ -171,7 +181,7 @@ variables:
     maximum: 128
     multipleOf: 1
     default: 2
-    title: " Shape OCPUs"
+    title: "Shape OCPUs"
     description: "Choose number of OCPUs for Shape."
 
   shape_mem:
@@ -219,27 +229,14 @@ variables:
     title: "Database storage size in GB"
     description: "Choose database storage size in GB for your DBSystem."
 
-  db_shape:
-    type: enum
+  db_shapes:
+    type: oci:core:instanceshape:name
+    title: "Instance Shape"
+    description: "Choose a shape for your instance"
+    default: "VM.Standard.E2.1"
     required: false
-    default: "VM.Standard2.2"
-    title: "DB System Shape"
-    description: "Choose the shape for your DBSystem."
-    enum:
-      - "VM.Standard1.2"
-      - "VM.Standard2.1"
-      - "VM.Standard1.2"
-      - "VM.Standard2.2"
-      - "VM.Standard1.4"
-      - "VM.Standard2.4"
-      - "VM.Standard1.8"
-      - "VM.Standard2.8"
-      - "VM.Standard1.16"
-      - "VM.Standard2.2"
-      - "VM.Standard2.16"
-      - "VM.Standard2.24"
-      - "BM.DenseIO2.52"
-      - "BM.DenseIO1.36" 
+    dependsOn:
+      compartmentId: ${compartment_ocid}
 
 
   ssh_key_db:
@@ -258,5 +255,15 @@ variables:
     default: 2
     title: " Shape OCPUs"
     description: "Choose number of OCPUs for Shape."
+
+  db_shape_mem:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 2
+    title: "DB Shape Mem"
+    description: "DB Shape Mem"
 
   
