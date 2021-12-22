@@ -89,76 +89,7 @@ locals {
   }
 }
 
-############################################################################
-# IPs:
-############################################################################
-variable "ip_vcn"{
-   default =" "
-}
-variable "ip_sub_dmz"{
-   default =" "
-}
-variable "ip_sub_private"{
-   default =" "
-}
 
-locals {
-  ips = {   
-    access      = {
-      v1_shraddha   = "49.37.160.172/32"
-      v1_anthony = "80.233.59.184/32"
-    }
-
-   #To raised through IRIS
-    v1proxy     = {
-      ip_v1_cl_vpn    = "95.45.180.36"
-      ip_v1_cl_domain = "172.19.146.112/29"
-      ip_v1_cw_vpn    = "159.134.94.228"
-      ip_v1_cw_domain = "172.20.152.184/29"
-    }
-    v1_domains = {
-      ip_v1_cl_domain = "172.19.146.112/29"
-      ip_v1_cw_domain = "172.20.152.184/29"
-    }
-    cuh_vpn = {
-      gmp_clayton_brook = "109.159.193.202"
-    }
-    gmp_domains = {
-      gmp_domain_1 = "10.2.0.0/16"
-      gmp_domain_2 = "10.4.0.0/16"
-      gmp_domain_3 = "10.200.0.0/16"
-      gmp_domain_4 = "10.210.0.0/16"
-      gmp_domain_5 = "10.211.0.0/16"
-      gmp_domain_6 = "10.220.0.0/16"
-      gmp_domain_7 = "10.221.0.0/16"
-      gmp_domain_8 = "10.230.0.0/17"
-      gmp_domain_9 = "10.250.0.0/16"
-      gmp_domain_10 = "10.251.0.0/16"
-      gmp_domain_11 = "172.22.176.0/21"
-      gmp_domain_12 = "172.22.184.0/22"
-      gmp_domain_13 = "172.23.176.0/21"
-      gmp_domain_14 = "172.23.184.0/22"
-      gmp_domain_15 = "192.168.76.0/22"
-      gmp_domain_16 = "192.168.176.0/21"
-      gmp_domain_17 = "192.168.68.0/22"
-      gmp_domain_18 = "192.168.168.0/22"
-    }
-  }
-}
-
-variable "v1proxy" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = []
-  
-}
-
-variable "domain" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = []
-  
-}
 
 ############################################################################
 # Instances:
@@ -331,11 +262,9 @@ locals {
 
 ############################################################################
 
-#SSH Keys
-variable "ssh_key_db" {}
-variable "ssh_key" {}
 
 #Compute Specific
+#######################################
 variable "availablity_domain" {
   default = "3"
 }
@@ -356,6 +285,7 @@ variable instance_shape {
 }
 
 #DB Specific
+#########################################
 
 variable "db_shapes" {
   
@@ -371,4 +301,99 @@ variable "db_shape_mem" {
 
 variable "data_storage_size_in_gb" {
   
+}
+
+
+#SSH Keys
+####################################
+variable "ssh_key_db" {}
+variable "ssh_key" {}
+
+
+############################################################################
+# IPs:
+############################################################################
+variable "ip_vcn"{
+   default =" "
+}
+variable "ip_sub_dmz"{
+   default =" "
+}
+variable "ip_sub_private"{
+   default =" "
+}
+
+locals {
+  ips = {   
+    access      = {
+      v1_shraddha   = "49.37.160.172/32"
+      v1_anthony = "80.233.59.184/32"
+    }
+
+   #To be raised through IRIS
+
+   /*
+    v1proxy     = {
+      ip_v1_cl_vpn    = "95.45.180.36"
+      ip_v1_cl_domain = "172.19.146.112/29"
+      ip_v1_cw_vpn    = "159.134.94.228"
+      ip_v1_cw_domain = "172.20.152.184/29"
+    }
+    v1_domains = {
+      ip_v1_cl_domain = "172.19.146.112/29"
+      ip_v1_cw_domain = "172.20.152.184/29"
+    }
+    cuh_vpn = {
+      gmp_clayton_brook = "109.159.193.202"
+    }
+    gmp_domains = {
+      gmp_domain_1 = "10.2.0.0/16"
+      gmp_domain_2 = "10.4.0.0/16"
+      gmp_domain_3 = "10.200.0.0/16"
+      gmp_domain_4 = "10.210.0.0/16"
+      gmp_domain_5 = "10.211.0.0/16"
+      gmp_domain_6 = "10.220.0.0/16"
+      gmp_domain_7 = "10.221.0.0/16"
+      gmp_domain_8 = "10.230.0.0/17"
+      gmp_domain_9 = "10.250.0.0/16"
+      gmp_domain_10 = "10.251.0.0/16"
+      gmp_domain_11 = "172.22.176.0/21"
+      gmp_domain_12 = "172.22.184.0/22"
+      gmp_domain_13 = "172.23.176.0/21"
+      gmp_domain_14 = "172.23.184.0/22"
+      gmp_domain_15 = "192.168.76.0/22"
+      gmp_domain_16 = "192.168.176.0/21"
+      gmp_domain_17 = "192.168.68.0/22"
+      gmp_domain_18 = "192.168.168.0/22"
+    }
+      */
+  }
+
+}
+
+variable "v1proxy" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+  
+}
+
+variable "domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+  
+}
+
+variable "v1_domains" {
+  type        = list(string)
+  description = "V1 Domain"
+  default     = [] 
+}
+variable "access" {
+
+  type        = list(string)
+  description = "List of access IPs allowed to connect "
+  default     = []
+
 }

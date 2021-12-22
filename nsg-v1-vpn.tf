@@ -27,12 +27,12 @@ output "nsg_v1_vpn_id" {
 # INGRESS:
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_ssh_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -44,12 +44,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_ssh
 } 
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_https_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -61,12 +61,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_htt
 } 
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_rdp_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -78,12 +78,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_rdp
 }
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_vnc_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -95,12 +95,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_vnc
 } 
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_http_app_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -112,12 +112,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_htt
 } 
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_sql_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -129,12 +129,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_sql
 } 
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_http_asserter_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -150,12 +150,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_ingress_htt
 # EGRESS:
 
 resource "oci_core_network_security_group_security_rule" "nsg_v1_vpn_egress_all_v1_vpn" {
-    for_each                  = local.ips.v1_domains
+    for_each                  = toset(var.v1_domains)
     network_security_group_id = oci_core_network_security_group.nsg_v1_vpn.id
     direction                 = "EGRESS"
     protocol                  = "all"
     description               = each.key
-    destination               = each.value
+    destination               = each.key
     destination_type          = "CIDR_BLOCK"
     stateless                 = false
 } 

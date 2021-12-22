@@ -33,6 +33,8 @@ variableGroups:
   - ip_sub_private
   - v1proxy
   - domain
+  - access
+  - v1_domains
 
 - title: "Database Configuration"
   visible: 
@@ -98,8 +100,6 @@ variables:
     required: true
     visibile: true
   
-  
-  
 
   # Network Configuration
 
@@ -149,6 +149,28 @@ variables:
     minItems: 1
     title: "CIDR Blocks for domain"
     description: "CIDR Blocks for v1proxy"
+
+  access:
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "Access IPs "
+    description: "Access IPs"
+
+  v1_domains:
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "Access IPs "
+    description: "Access IPs"
 
 
 # Compute Configuration
