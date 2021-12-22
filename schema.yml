@@ -29,7 +29,7 @@ variableGroups:
   variables:
   - ip_vcn
   - ip_sub_dmz
-  - ip_sub_app
+  - ip_sub_private
   - v1proxy
   - domain
 
@@ -110,7 +110,7 @@ variables:
     title: "Subnet IP - Prod Database"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
-  ip_sub_app:
+  ip_sub_private:
     type: string
     required: false
     default: "10.199.2.0/24"

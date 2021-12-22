@@ -201,26 +201,8 @@ module "nsg_prod_common_ingress_vnc" {
     net_sec_rule_tcp_min     = "5900"
     net_sec_rule_tcp_max     = "5910"
 }
-module "nsg_prod_common_ingress_sql_clone" {
-    source                   = "./modules/network-sec-rules"
-    net_sec_group_id         = oci_core_network_security_group.nsg_prod_common.id
-    net_sec_rule_desc        = "nsg_prod_common_ingress_sql_clone"
-    net_sec_rule_source      = oci_core_network_security_group.nsg_nprd_common.id
-    net_sec_rule_source_type = "NETWORK_SECURITY_GROUP"
-    create_ingress_tcp       = true
-    net_sec_rule_tcp_min     = "1521"
-    net_sec_rule_tcp_max     = "1526"
-}
-module "nsg_prod_common_ingress_ssh_clone" {
-    source                   = "./modules/network-sec-rules"
-    net_sec_group_id         = oci_core_network_security_group.nsg_prod_common.id
-    net_sec_rule_desc        = "nsg_prod_common_ingress_ssh_clone"
-    net_sec_rule_source      = oci_core_network_security_group.nsg_nprd_common.id
-    net_sec_rule_source_type = "NETWORK_SECURITY_GROUP"
-    create_ingress_tcp       = true
-    net_sec_rule_tcp_min     = "22"
-    net_sec_rule_tcp_max     = "22"
-}
+
+
 module "nsg_prod_common_ingress_ping" {
     source                   = "./modules/network-sec-rules"
     net_sec_group_id         = oci_core_network_security_group.nsg_prod_common.id

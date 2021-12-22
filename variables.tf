@@ -28,7 +28,66 @@ locals {
       compartment_description = "${var.customer_label} Production Services"
     }
   }
+  tag_namespaces = {
+    Billing = {
+      tag_namespace_compartment_id = module.iam.compartments["common_services"]
+      tag_namespace_description    = "Namespace for Billing tags"
+      tags = {
+        CostCentre = {
+          tag_description      = "Internal Cost Centre"
+          tag_is_cost_tracking = true
+        }
+        Workload = {
+          tag_description      = "Workload Type"
+          tag_is_cost_tracking = true
+        }
+        Environment = {
+          tag_description      = "Environment Type"
+          tag_is_cost_tracking = true
+        }
+      }
+    }
+    Account = {
+      tag_namespace_compartment_id = module.iam.compartments["common_services"]
+      tag_namespace_description    = "Namespace for Account tags"
+      tags = {
+        StackName = {
+          tag_description      = "Product/Environment title"
+        }
+        StackOwner = {
+          tag_description      = "Product Owner"
+        }
+        ProjectName = {
+          tag_description      = "Internal project title"
+        }
+        BillingOwner = {
+          tag_description      = "Full name of person who administers this instance"
+        }
+        CompartmentName = {
+          tag_description      = "The compartment the resource belongs to"
+        }
+      }
+    }
+  }
 }
+
+############################################################################
+# Tags:
+############################################################################
+
+locals {
+  tags = {
+    "Account.StackName"          = ""
+    "Account.StackOwner"         = ""
+    "Account.ProjectName"        = ""
+    "Account.BillingOwner"       = ""
+    "Account.CompartmentName"    = ""
+    "Billing.CostCentre"         = ""
+    "Billing.Workload"           = ""
+    "Billing.Environment"        = ""
+  }
+}
+
 ############################################################################
 # IPs:
 ############################################################################
@@ -144,7 +203,7 @@ locals {
           subnet_route_table = "dmz"
         }
         private = {
-          subnet_cidr_block      = var.ip_sub_app
+          subnet_cidr_block      = var.ip_sub_private
           subnet_dns_label       = "${var.customer_label}app"
           subnet_is_private      = true
           subnet_route_table     = "app"
@@ -247,7 +306,6 @@ locals {
     }
     gmp_cb = {
       compartment_id       = module.iam.compartments["common_services"]
-      cpe_ip_address       = local.ips.gmp_vpn["gmp_clayton_brook"]
       ip_sec_static_routes = [local.ips.gmp_domains["gmp_domain_1"]
                              ,local.ips.gmp_domains["gmp_domain_2"]
                              ,local.ips.gmp_domains["gmp_domain_3"]
@@ -277,7 +335,7 @@ variable "ssh_key_db" {}
 variable "ssh_key" {}
 
 #Compute Specific
-variable "availablity_domain_name" {
+variable "availablity_domain" {
   default = "3"
 }
 variable "shape_ocpus" {
@@ -297,9 +355,6 @@ variable instance_shape {
 }
 
 #DB Specific
-shape                   = var.db_shapes
-  shape_ocpus             = var.db_shape_ocpus
-  shape_mem               = var.db_shape_mem
 
 variable "db_shapes" {
   
