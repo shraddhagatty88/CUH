@@ -148,7 +148,7 @@ variables:
     maxItems: 9
     minItems: 1
     title: "CIDR Blocks for domain"
-    description: "CIDR Blocks for v1proxy"
+    description: "CIDR Blocks for domain"
 
   access:
     type: array
@@ -169,8 +169,8 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "Access IPs "
-    description: "Access IPs"
+    title: "v1_domains "
+    description: "v1_domains"
 
 
 # Compute Configuration
@@ -194,7 +194,7 @@ variables:
     default: "VM.Standard.E2.1"
     required: false
     dependsOn:
-      compartmentId: ${compartment_ocid}
+      compartmentId: ${compartment_id}
 
   shape_ocpus:
     type: number
@@ -258,7 +258,7 @@ variables:
     default: "VM.Standard.E2.1"
     required: false
     dependsOn:
-      compartmentId: ${compartment_ocid}
+      compartmentId: ${compartment_id}
 
 
   ssh_key_db:
