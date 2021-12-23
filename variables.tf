@@ -223,7 +223,7 @@ locals {
 ############################################################################
 # VPN:
 ############################################################################
-
+/*
 locals {
   vpns = {
     v1_cl = {
@@ -238,28 +238,11 @@ locals {
     }
     gmp_cb = {
       compartment_id       = module.iam.compartments["common_services"]
-      ip_sec_static_routes = [local.ips.gmp_domains["gmp_domain_1"]
-                             ,local.ips.gmp_domains["gmp_domain_2"]
-                             ,local.ips.gmp_domains["gmp_domain_3"]
-                             ,local.ips.gmp_domains["gmp_domain_4"]
-                             ,local.ips.gmp_domains["gmp_domain_5"]
-                             ,local.ips.gmp_domains["gmp_domain_6"]
-                             ,local.ips.gmp_domains["gmp_domain_7"]
-                             ,local.ips.gmp_domains["gmp_domain_8"]
-                             ,local.ips.gmp_domains["gmp_domain_9"]
-                             ,local.ips.gmp_domains["gmp_domain_10"]
-                             ,local.ips.gmp_domains["gmp_domain_11"]
-                             ,local.ips.gmp_domains["gmp_domain_12"]
-                             ,local.ips.gmp_domains["gmp_domain_13"]
-                             ,local.ips.gmp_domains["gmp_domain_14"]
-                             ,local.ips.gmp_domains["gmp_domain_15"]
-                             ,local.ips.gmp_domains["gmp_domain_16"]
-                             ,local.ips.gmp_domains["gmp_domain_17"]
-                             ,local.ips.gmp_domains["gmp_domain_18"]]
+      ip_sec_static_routes = var.domain
     }
   }
 }
-
+*/
 ############################################################################
 
 

@@ -21,6 +21,6 @@ module "instance_opsview" {
   assign_public_ip        = true
   #private_ip              = [local.ips.instances["opsView"]]
   boot_backup_policy      = var.backup_policy
-  #defined_tags            = local.tags
+  defined_tags            = local.tags
 }
 ############################################################################

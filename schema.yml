@@ -1,6 +1,6 @@
-title: "OCI Template example"
-description: "OCI Template"
-stackDescription: "OCI Template"
+title: "OCI Terraform  Configuration "
+description: "Stack to deploy resources in OCI Tenancy"
+stackDescription: "Stack to deploy resources in OCI Tenancy"
 schemaVersion: 1.1.0
 version: "20201125"
 locale: "en"

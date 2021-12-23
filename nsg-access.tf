@@ -26,12 +26,12 @@ output "nsg_access_id" {
 # Ingress:
 
 resource "oci_core_network_security_group_security_rule" "nsg_access_ingress_ssh_v1" {
-    for_each                  = local.ips.access
+    for_each                  = toset(var.access)
     network_security_group_id = oci_core_network_security_group.nsg_access.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {
@@ -43,12 +43,12 @@ resource "oci_core_network_security_group_security_rule" "nsg_access_ingress_ssh
 } 
 
 resource "oci_core_network_security_group_security_rule" "nsg_access_ingress_rdp_v1" {
-    for_each                  = local.ips.access
+    for_each                  =  toset(var.access)
     network_security_group_id = oci_core_network_security_group.nsg_access.id
     direction                 = "INGRESS"
     protocol                  = "6"
     description               = each.key
-    source                    = each.value
+    source                    = each.key
     source_type               = "CIDR_BLOCK"
     stateless                 = false
     tcp_options {

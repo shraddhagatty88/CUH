@@ -21,7 +21,7 @@ module "instance_test_db1" {
   assign_public_ip        = false
   boot_backup_policy      = "silver"
   #private_ip              = [local.ips.instances["ebs_intl_test_db"]]
-  #defined_tags            = local.tags
+  defined_tags            = local.tags
 }
 
 ############################################################################
