@@ -60,6 +60,12 @@ variableGroups:
   - instance_shape
   - ssh_key
  
+- title: "Vulnerability Scanning"
+  variables:
+    - "vss_create"
+    - "vss_scan_schedule"
+    - "vss_scan_day"
+
 
 variables:
 
@@ -287,5 +293,43 @@ variables:
     default: 2
     title: "DB Shape Mem"
     description: "DB Shape Mem"
+
+
+ # Vulnerability Scanning
+  vss_create:
+    type: boolean
+    title: "Enable Vulnerability Scanning?"
+    description: "Whether Vulnerability Scanning should be enabled. If checked, a scanning recipe is created and scanning targets are created for each Landing Zone compartment."
+    default: true
+
+  vss_scan_schedule:
+    type: enum
+    title: "Scanning Schedule"
+    description: "When to scan. WEEKLY or DAILY."
+    default: WEEKLY
+    visible: vss_create
+    enum:
+      - WEEKLY
+      - DAILY
+
+  vss_scan_day:
+    type: enum
+    title: "Scanning Day"
+    description: "The day when to scan. Applies to weekly scans only."
+    default: SUNDAY
+    enum:
+      - SUNDAY
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY 
+    visible:
+      and:
+        - ${vss_create}
+        - eq:
+          - vss_scan_schedule
+          - "WEEKLY"
 
   
