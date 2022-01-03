@@ -30,3 +30,9 @@ data "oci_objectstorage_namespace" "tenancy_namespace" {
 }
 
 ############################################################################
+
+# Cloud Guard
+
+data "oci_cloud_guard_cloud_guard_configuration" "this" {
+  compartment_id = var.tenancy_ocid
+}
