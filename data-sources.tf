@@ -13,6 +13,8 @@ data "oci_identity_availability_domains" "ads" {
   compartment_id = var.tenancy_ocid
 }
 
+data "oci_identity_regions" "these" {}
+
 ############################################################################
 # Object Storage:
 
@@ -36,3 +38,4 @@ data "oci_objectstorage_namespace" "tenancy_namespace" {
 data "oci_cloud_guard_cloud_guard_configuration" "this" {
   compartment_id = var.tenancy_ocid
 }
+
