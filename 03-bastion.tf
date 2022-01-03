@@ -13,5 +13,4 @@ resource "oci_bastion_bastion" "test_bastion" {
     client_cidr_block_allow_list = var.public_src_bastion_cidrs
     max_session_ttl_in_seconds = local.bastion_max_session_ttl_in_seconds
 
-    
 }
