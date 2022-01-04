@@ -10,6 +10,7 @@ module "instance_test_db2" {
   shape                   = var.db_shapes
   shape_ocpus             = var.db_shape_ocpus
   shape_mem               = var.db_shape_mem
+  availability_domain     = 2
   fault_domain            = 3
   compartment_id          = module.iam.compartments["prod_services"]
   subnet_id               = module.vcn.subnets["vcn1_sub_private"]

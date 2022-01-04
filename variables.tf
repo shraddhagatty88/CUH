@@ -169,28 +169,8 @@ locals {
             }])
           
         }
-        app = {
-          route_rules = concat (
-            [for cidr in var.v1proxy : {
-                route_rule_network_entity_id = "DRG"
-                route_rule_destination       = cidr
-                route_rule_destination_type  = "CIDR_BLOCK"
-             }
-            ],
 
-            [for cidr in var.domain : {
-             
-                route_rule_network_entity_id = "DRG"
-                route_rule_destination       = cidr
-                route_rule_destination_type  = "CIDR_BLOCK"
-            
-            
-            }
-            ])
-            
-        }
-
-        db = {
+        private = {
           route_rules = concat (
             [for cidr in var.v1proxy : {
                 route_rule_network_entity_id = "DRG"
@@ -270,21 +250,10 @@ variable instance_shape {
 #DB Specific
 #########################################
 
-variable "db_shapes" {
-  
-}
-
-variable "db_shape_ocpus" {
-  
-}
-
-variable "db_shape_mem" {
-  
-}
-
-variable "data_storage_size_in_gb" {
-  
-}
+variable "db_shapes" {}
+variable "db_shape_ocpus" { }
+variable "db_shape_mem" { }
+variable "data_storage_size_in_gb" { }
 
 
 #SSH Keys
