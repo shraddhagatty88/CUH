@@ -45,7 +45,7 @@ variableGroups:
   variables:
   - data_storage_size_in_gb
   - db_shapes
-  - db_shape_ocpu
+  - db_shape_ocpus
   - ssh_key_db
   - db_shape_mem
 
@@ -379,7 +379,7 @@ variables:
         - ${vss_create}
         - eq:
           - vss_scan_schedule
-          - "WEEKLY"
+          - WEEKLY
 
   
 #Events and Notifications
