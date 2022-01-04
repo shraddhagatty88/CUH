@@ -138,7 +138,7 @@ locals {
           subnet_cidr_block      = var.ip_sub_private
           subnet_dns_label       = "${var.customer_label}app"
           subnet_is_private      = true
-          subnet_route_table     = "app"
+          subnet_route_table     = "private"
         }
       }
       route_tables = {
