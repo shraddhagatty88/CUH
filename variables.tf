@@ -209,19 +209,42 @@ locals {
     v1_cl = {
       compartment_id       = module.iam.compartments["common_services"]
       cpe_ip_address       = local.ips.v1proxy["ip_v1_cl_vpn"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
       ip_sec_static_routes = [local.ips.v1proxy["ip_v1_cl_domain"]]
     }
     v1_cw = {
       compartment_id       = module.iam.compartments["common_services"]
       cpe_ip_address       = local.ips.v1proxy["ip_v1_cw_vpn"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
       ip_sec_static_routes = [local.ips.v1proxy["ip_v1_cw_domain"]]
     }
     gmp_cb = {
       compartment_id       = module.iam.compartments["common_services"]
-      ip_sec_static_routes = var.domain
+      cpe_ip_address       = local.ips.gmp_vpn["gmp_clayton_brook"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
+      ip_sec_static_routes = [local.ips.gmp_domains["gmp_domain_1"]
+                             ,local.ips.gmp_domains["gmp_domain_2"]
+                             ,local.ips.gmp_domains["gmp_domain_3"]
+                             ,local.ips.gmp_domains["gmp_domain_4"]
+                             ,local.ips.gmp_domains["gmp_domain_5"]
+                             ,local.ips.gmp_domains["gmp_domain_6"]
+                             ,local.ips.gmp_domains["gmp_domain_7"]
+                             ,local.ips.gmp_domains["gmp_domain_8"]
+                             ,local.ips.gmp_domains["gmp_domain_9"]
+                             ,local.ips.gmp_domains["gmp_domain_10"]
+                             ,local.ips.gmp_domains["gmp_domain_11"]
+                             ,local.ips.gmp_domains["gmp_domain_12"]
+                             ,local.ips.gmp_domains["gmp_domain_13"]
+                             ,local.ips.gmp_domains["gmp_domain_14"]
+                             ,local.ips.gmp_domains["gmp_domain_15"]
+                             ,local.ips.gmp_domains["gmp_domain_16"]
+                             ,local.ips.gmp_domains["gmp_domain_17"]
+                             ,local.ips.gmp_domains["gmp_domain_18"]]
     }
   }
 }
+
+############################################################################
 */
 ############################################################################
 
