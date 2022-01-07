@@ -136,7 +136,7 @@ locals {
         }
         private = {
           subnet_cidr_block      = var.ip_sub_private
-          subnet_dns_label       = "${var.customer_label}app"
+          subnet_dns_label       = "${var.customer_label}private"
           subnet_is_private      = true
           subnet_route_table     = "private"
         }
@@ -145,14 +145,14 @@ locals {
         dmz = {
           route_rules =concat( 
         
-            [for cidr in var.v1proxy : {
+            [for cidr in local.v1_domains : {
                 route_rule_network_entity_id = "DRG"
                 route_rule_destination       = cidr
                 route_rule_destination_type  = "CIDR_BLOCK"
              }
             ],
 
-            [for cidr in var.domain : {
+            [for cidr in local.cust_domains : {
              
                 route_rule_network_entity_id = "DRG"
                 route_rule_destination       = cidr
@@ -172,19 +172,18 @@ locals {
 
         private = {
           route_rules = concat (
-            [for cidr in var.v1proxy : {
+            [for cidr in local.v1_domains : {
                 route_rule_network_entity_id = "DRG"
                 route_rule_destination       = cidr
                 route_rule_destination_type  = "CIDR_BLOCK"
              }
             ],
 
-            [for cidr in var.domain : {
+            [for cidr in local.cust_domains : {
              
                 route_rule_network_entity_id = "DRG"
                 route_rule_destination       = cidr
                 route_rule_destination_type  = "CIDR_BLOCK"
-            
             
             }
             ],
@@ -203,49 +202,38 @@ locals {
 ############################################################################
 # VPN:
 ############################################################################
-/*
+
 locals {
   vpns = {
     v1_cl = {
       compartment_id       = module.iam.compartments["common_services"]
-      cpe_ip_address       = local.ips.v1proxy["ip_v1_cl_vpn"]
+      cpe_ip_address       = var.v1_cl_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
-      ip_sec_static_routes = [local.ips.v1proxy["ip_v1_cl_domain"]]
+      ip_sec_static_routes = [var.v1_cl_domain]
     }
     v1_cw = {
       compartment_id       = module.iam.compartments["common_services"]
-      cpe_ip_address       = local.ips.v1proxy["ip_v1_cw_vpn"]
+      cpe_ip_address       = var.v1_cw_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
-      ip_sec_static_routes = [local.ips.v1proxy["ip_v1_cw_domain"]]
+      ip_sec_static_routes = [var.v1_cw_domain]
     }
-    gmp_cb = {
+    cust1 = {
       compartment_id       = module.iam.compartments["common_services"]
-      cpe_ip_address       = local.ips.gmp_vpn["gmp_clayton_brook"]
+      cpe_ip_address       = var.cust1_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
-      ip_sec_static_routes = [local.ips.gmp_domains["gmp_domain_1"]
-                             ,local.ips.gmp_domains["gmp_domain_2"]
-                             ,local.ips.gmp_domains["gmp_domain_3"]
-                             ,local.ips.gmp_domains["gmp_domain_4"]
-                             ,local.ips.gmp_domains["gmp_domain_5"]
-                             ,local.ips.gmp_domains["gmp_domain_6"]
-                             ,local.ips.gmp_domains["gmp_domain_7"]
-                             ,local.ips.gmp_domains["gmp_domain_8"]
-                             ,local.ips.gmp_domains["gmp_domain_9"]
-                             ,local.ips.gmp_domains["gmp_domain_10"]
-                             ,local.ips.gmp_domains["gmp_domain_11"]
-                             ,local.ips.gmp_domains["gmp_domain_12"]
-                             ,local.ips.gmp_domains["gmp_domain_13"]
-                             ,local.ips.gmp_domains["gmp_domain_14"]
-                             ,local.ips.gmp_domains["gmp_domain_15"]
-                             ,local.ips.gmp_domains["gmp_domain_16"]
-                             ,local.ips.gmp_domains["gmp_domain_17"]
-                             ,local.ips.gmp_domains["gmp_domain_18"]]
+      ip_sec_static_routes = var.cust1_domain
+    }
+    cust2 = {
+      compartment_id       = module.iam.compartments["common_services"]
+      cpe_ip_address       = var.cust2_vpn
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
+      ip_sec_static_routes = var.cust2_domain
     }
   }
 }
 
 ############################################################################
-*/
+
 ############################################################################
 
 
@@ -318,7 +306,7 @@ locals {
       ip_v1_cl_domain = "172.19.146.112/29"
       ip_v1_cw_domain = "172.20.152.184/29"
     }
-    cuh_vpn = {
+    gmp_vpn = {
       gmp_clayton_brook = "109.159.193.202"
     }
     gmp_domains = {
@@ -345,17 +333,55 @@ locals {
   }
 
 }
+###########################################
+#VPN
+###########################################
+locals {
 
-variable "v1proxy" {
+v1_vpns = ["${var.v1_cl_vpn}","${var.v1_cw_vpn}"]
+cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
+v1_domains = flatten([var.v1_cl_domain, var.v1_cw_domain])
+cust_domains = flatten([var.cust1_domain, var.cust2_domain])
+
+}
+
+variable "v1_cl_vpn" {}
+variable "v1_cw_vpn" {}
+
+
+variable "cust1_vpn" {}
+variable "cust2_vpn" {}
+
+variable "v1_cl_domain" {
   type        = list(string)
   description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
   default     = []
-  
 }
-
-variable "domain" {
+variable "v1_cw_domain" {
   type        = list(string)
   description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+
+variable "cust1_domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+variable "cust2_domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+/*
+variable "cust_vpns"{
+  type        = list(string)
+  description = "List of customer vpns"
+  default     = []
+}
+variable "v1_vpns" {
+  type        = list(string)
+  description = "List of version 1 vpns"
   default     = []
   
 }
@@ -365,6 +391,20 @@ variable "v1_domains" {
   description = "V1 Domain"
   default     = [] 
 }
+
+variable "cust_domains" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = [] 
+}
+
+
+v1_vpns = ["${var.v1_cl}","${var.v1_cw}"]
+cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
+v1_domains = flatten(var.v1_cl_domain, var.v1_cw_domain)
+cust_domains = flatten(var.cust1_domin, var.cust2.domain)
+
+*/
 variable "access" {
 
   type        = list(string)
@@ -372,6 +412,7 @@ variable "access" {
   default     = []
 
 }
+
 
 ####################################
 #Bastion

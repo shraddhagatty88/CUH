@@ -32,11 +32,28 @@ variableGroups:
   - ip_vcn
   - ip_sub_dmz
   - ip_sub_private
-  - v1proxy
-  - domain
+  - v1_vpns
+  - cust_vpns
+  - cust_domains
   - access
   - v1_domains
   - public_src_bastion_cidrs
+
+- title: "VPN  Configuration"
+  visible: 
+      and:
+        - show_advanced
+  variables:
+  - v1_cl_vpn
+  - v1_cw_vpn
+  - cust1_vpn
+  - cust2_vpn
+  - v1_cl_domain
+  - v1_cw_domain
+  - cust1_domain
+  - cust2_domain
+  - access
+ 
 
 - title: "Database Configuration"
   visible: 
@@ -156,19 +173,51 @@ variables:
     title: "Subnet IP- PRIVATE"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
-  v1proxy: 
+  public_src_bastion_cidrs:
     type: array
     items:
       type: string
-    uniqueItems: true
-    required: false
-    maxItems: 9
-    minItems: 1
-    title: "CIDR Blocks for v1proxy"
-    description: "CIDR Blocks for v1proxy"
+    uniqueItems: true  
+    title: "BASTION --Inbound SSH CIDR Blocks"
+    #pattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/([0-9]|[1-2][0-9]|3[0-2]))$"
+    description: "List of external IP ranges in CIDR notation allowed to make SSH inbound connections. 0.0.0.0/0 is not allowed in the list. (Type the name and hit enter to enter multiple values)"
     default: []
 
-  domain: 
+# VPN Configuration
+
+  v1_cl_vpn:
+    type: string
+    required: false
+    default: "10.199.2.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP- PRIVATE"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  v1_cw_vpn:
+    type: string
+    required: false
+    default: "10.199.2.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP- PRIVATE"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  cust1_vpn:
+    type: string
+    required: false
+    default: "10.199.2.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP- PRIVATE"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  cust2_vpn:
+    type: string
+    required: false
+    default: "10.199.2.0/24"
+    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    title: "Subnet IP- PRIVATE"
+    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+
+  v1_cl_domain: 
     type: array
     items:
       type: string
@@ -176,8 +225,46 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for domain"
-    description: "CIDR Blocks for domain"
+    title: "CIDR Blocks for v1 vpns"
+    description: "CIDR Blocks for v1 vpns"
+    default: []
+
+
+  v1_cw_domain: 
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "CIDR Blocks for customer vpns"
+    description: "CIDR Blocks for customer vpns"
+    default: []
+
+  cust1_domain: 
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "CIDR Blocks for customer domain"
+    description: "CIDR Blocks for customer domain"
+    default: []
+
+
+  cust2_domain:
+    type: array
+    items:
+      type: string
+    uniqueItems: true
+    required: false
+    maxItems: 9
+    minItems: 1
+    title: "v1_domains "
+    description: "v1_domains"
     default: []
 
   access:
@@ -191,30 +278,6 @@ variables:
     title: "Access IPs "
     description: "Access IPs"
     default: []
-
-  v1_domains:
-    type: array
-    items:
-      type: string
-    uniqueItems: true
-    required: false
-    maxItems: 9
-    minItems: 1
-    title: "v1_domains "
-    description: "v1_domains"
-    default: []
-
-  public_src_bastion_cidrs:
-    type: array
-    items:
-      type: string
-    uniqueItems: true  
-    title: "BASTION --Inbound SSH CIDR Blocks"
-    #pattern: "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\\/([0-9]|[1-2][0-9]|3[0-2]))$"
-    description: "List of external IP ranges in CIDR notation allowed to make SSH inbound connections. 0.0.0.0/0 is not allowed in the list. (Type the name and hit enter to enter multiple values)"
-    default: []
-
-  
 
 
 # Compute Configuration

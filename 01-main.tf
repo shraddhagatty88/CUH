@@ -18,7 +18,7 @@ module "vcn" {
   vcn_inputs         = local.vcns
   #dhcp_options       = oci_core_dhcp_options.dhcp_options_gmp_dns.id
 }
-/*
+
 ############################################################################
 # VPN:
 ############################################################################
@@ -26,6 +26,6 @@ module "vcn" {
 module "vpn" {
   source             = "./modules/tf-oci-mod-vpn" # "git::https://git.version1.com/scm/ivo/tf-oci-mod-vpn.git"
   vpn_inputs         = local.vpns
-}*/
+}
 
 ############################################################################
