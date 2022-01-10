@@ -16,7 +16,7 @@ module "instance_test_db2" {
   subnet_id               = module.vcn.subnets["vcn1_sub_private"]
   network_sec_groups      = [oci_core_network_security_group.nsg_prod_common.id,oci_core_network_security_group.nsg_v1_vpn.id,oci_core_network_security_group.nsg_prod_db]
   ssh_authorized_keys     = var.ssh_key_db
-  source_id               = "ocid1.image.oc1.uk-london-1.aaaaaaaahm2udvgllrsptv6q3afrduo6tpuqa2ti6fcst5gt3myc7zsfocmq"
+  source_id               = "ocid1.image.oc1.uk-london-1.aaaaaaaa4ubcwfrtn3zltzffg4slwkxzayp3px3ukowqn7sbgdcecl65sega"
   boot_volume_size_in_gbs = var.data_storage_size_in_gb
   assign_public_ip        = false
   boot_backup_policy      = "silver"

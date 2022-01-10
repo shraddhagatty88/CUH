@@ -151,7 +151,7 @@ variables:
   ip_vcn:
     type: string
     required: false
-    default: "10.199.0.0/22"
+    default: "10.199.0.0/16"
     pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
     title: "VCN CIDR"
     description: "Choose single, contiguous IPv4 CIDR block for the VCN"
@@ -188,32 +188,28 @@ variables:
   v1_cl_vpn:
     type: string
     required: false
-    default: "10.199.2.0/24"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    default: "95.45.180.36"
     title: "Subnet IP- PRIVATE"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
   v1_cw_vpn:
     type: string
     required: false
-    default: "10.199.2.0/24"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    default: "159.134.94.228"
     title: "Subnet IP- PRIVATE"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
   cust1_vpn:
     type: string
     required: false
-    default: "10.199.2.0/24"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    default: "109.159.193.202"
     title: "Subnet IP- PRIVATE"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
   cust2_vpn:
     type: string
     required: false
-    default: "10.199.2.0/24"
-    pattern: "^(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9]).(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9]?[0-9])\\/(3[0-2]|[1-2]?[0-9])$"
+    default: "109.159.193.203"
     title: "Subnet IP- PRIVATE"
     description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
 
