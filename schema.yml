@@ -59,7 +59,7 @@ variableGroups:
   - ssh_key_db
   - db_shape_mem
 
-- title: "Compute  Configuration"
+- title: "Compute  Configuration (DB)"
   visible: 
       and:
         - show_advanced
@@ -71,6 +71,27 @@ variableGroups:
   - boot_volume_size_in_gbs
   - instance_shape
   - ssh_key
+
+- title: "Compute  Configuration(OPSVIEW Monitoring)"
+  visible: 
+      and:
+        - show_advanced
+  variables:
+  - availablity_domain_opsview
+  - shape_ocpus_opsview
+  - shape_mem_opsview
+  - backup_policy_opsview
+  - boot_volume_size_in_gbs_opsview
+  - instance_shape_opsview
+  - ssh_key_opsview
+
+  - title: "Compute  Configuration(Bastion)"
+  visible: 
+      and:
+        - show_advanced
+  variables:
+  - instance_shape_bastion
+  - ssh_key_bastion
 
 
 
@@ -316,6 +337,95 @@ variables:
     type: oci:core:ssh:publickey
     required: true
 
+
+# Compute Configuration(OpsView)
+  
+  availablity_domain_opsview:
+    type: enum
+    required: true
+    visibile: true
+    title: "Availability Domain to be chosen"
+    description: "Choose Availability Domain where your application will be deployed."
+    default: "1"
+    enum:
+      - "1"
+      - "2"
+      - "3"
+
+  instance_shape_opsview:
+    type: oci:core:instanceshape:name
+    title: "Instance Shape"
+    description: "Choose a shape for your instance"
+    default: "VM.Standard.E2.1"
+    required: false
+    dependsOn:
+      compartmentId: ${compartment_id}
+
+  shape_ocpus_opsview:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 1
+    title: "Shape OCPUs"
+    description: "Choose number of OCPUs for Shape."
+
+  shape_mem_opsview:
+    type: number
+    required: false
+    minimum: 1
+    maximum: 128
+    multipleOf: 1
+    default: 8
+    title: " Shape Memory (GB)"
+    description: "Choose number GB for Shape Memory."
+
+  backup_policy_opsview:
+    type: enum
+    required: false
+    title: "backup policy"
+    description: "choose backup policy for instances"
+    default: "silver"
+    enum:
+      - "silver"
+      - "bronze"
+      - "gold"
+  
+  boot_volume_size_in_gbs_opsview:
+    type: number
+    required: false
+    multipleOf: 1
+    default: 100
+    title: " Shape Memory (GB)"
+    description: "Choose number GB for Shape Memory."
+
+  ssh_key_opsview:
+    title: SSH Public Key
+    description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
+    # renders variable as an SSH key control
+    type: oci:core:ssh:publickey
+    required: true
+
+
+#Bastion
+  instance_shape_bastion:
+    type: oci:core:instanceshape:name
+    title: "Instance Shape"
+    description: "Choose a shape for your instance"
+    default: "VM.Standard.E2.1"
+    required: false
+    dependsOn:
+      compartmentId: ${compartment_id}
+  
+  ssh_key_bastion:
+    title: SSH Public Key
+    description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
+    # renders variable as an SSH key control
+    type: oci:core:ssh:publickey
+    required: true
+  
+
  # DB Configuration
   
   data_storage_size_in_gb:
@@ -329,7 +439,7 @@ variables:
     type: oci:core:instanceshape:name
     title: "Instance Shape"
     description: "Choose a shape for your instance"
-    default: "VM.Standard.E2.1"
+    default: "VM.Standard.E2.2"
     required: false
     dependsOn:
       compartmentId: ${compartment_id}
@@ -358,7 +468,7 @@ variables:
     minimum: 1
     maximum: 128
     multipleOf: 1
-    default: 2
+    default: 16
     title: "DB Shape Mem"
     description: "DB Shape Mem"
 

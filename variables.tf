@@ -258,6 +258,28 @@ variable instance_shape {
     default = "VM.Standard.E2.1"
 }
 
+#Opsview
+variable "availablity_domain_opsview" {
+  default = "1"
+}
+variable "shape_ocpus_opsview" {
+  default = 1
+}
+variable "shape_mem_opsview" {
+  default = 8
+}
+variable "boot_volume_size_in_gbs_opsview" {
+  default = 100
+}
+variable "backup_policy_opsview" {
+  default = "silver"
+}
+variable instance_shape_opsview {
+    default = "VM.Standard.E2.1"
+}
+
+#bastion
+variable "instance_shape_bastion"{default = "VM.Standard.E2.1"}
 #DB Specific
 #########################################
 
@@ -271,6 +293,8 @@ variable "data_storage_size_in_gb" { }
 ####################################
 variable "ssh_key_db" {}
 variable "ssh_key" {}
+variable "ssh_key_opsview"{}
+variable "ssh_key_bastion"{}
 
 
 ############################################################################
