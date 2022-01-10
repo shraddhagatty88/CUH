@@ -269,14 +269,6 @@ variables:
       - "2"
       - "3"
 
-  instance_shape:
-    type: oci:core:instanceshape:name
-    title: "Instance Shape"
-    description: "Choose a shape for your instance"
-    default: "VM.Standard.E2.1"
-    required: false
-    dependsOn:
-      compartmentId: ${compartment_id}
 
   shape_ocpus:
     type: number

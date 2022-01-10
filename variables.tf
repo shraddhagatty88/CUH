@@ -255,7 +255,6 @@ variable "backup_policy" {
   default = "silver"
 }
 
-
 #Opsview
 variable "availablity_domain_opsview" {
   default = "1"
@@ -292,7 +291,6 @@ variable "data_storage_size_in_gb" { }
 #SSH Keys
 ####################################
 variable "ssh_key_db" {}
-variable "ssh_key" {}
 variable "ssh_key_opsview"{}
 variable "ssh_key_bastion"{}
 
