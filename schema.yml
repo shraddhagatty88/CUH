@@ -65,12 +65,8 @@ variableGroups:
         - show_advanced
   variables:
   - availablity_domain
-  - shape_ocpus
-  - shape_mem
   - backup_policy
-  - boot_volume_size_in_gbs
-  - instance_shape
-  - ssh_key
+
 
 - title: "Compute  Configuration(OPSVIEW Monitoring)"
   visible: 
@@ -92,6 +88,9 @@ variableGroups:
   variables:
   - instance_shape_bastion
   - ssh_key_bastion
+  - shape_ocpus
+  - shape_mem
+  - boot_volume_size_in_gbs
 
 variables:
 
@@ -132,16 +131,6 @@ variables:
     required: true
     visibile: true
 
-  policies_in_root_compartment:
-    type: enum
-    title: "CREATE or USE policies in the root compartment?"
-    description: "Whether policies in the root compartment should be created or simply used. If \"CREATE\", you must be sure the user executing this stack has permissions to create policies in the root compartment. If \"USE\", policies must have been created previously."
-    enum:
-      - "CREATE"
-      - "USE"
-    required: true
-    default: "CREATE"
-    visible: env_advanced_options
   
 
   # Network Configuration

@@ -254,9 +254,7 @@ variable "boot_volume_size_in_gbs" {
 variable "backup_policy" {
   default = "silver"
 }
-variable instance_shape {
-    default = "VM.Standard.E2.1"
-}
+
 
 #Opsview
 variable "availablity_domain_opsview" {
@@ -280,6 +278,8 @@ variable instance_shape_opsview {
 
 #bastion
 variable "instance_shape_bastion"{default = "VM.Standard.E2.1"}
+
+###################################
 #DB Specific
 #########################################
 
