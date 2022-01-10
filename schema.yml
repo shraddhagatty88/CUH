@@ -88,8 +88,6 @@ variableGroups:
   variables:
     - "network_admin_email_endpoints"
 
-
-
 variables:
 
   show_advanced:
@@ -184,29 +182,29 @@ variables:
     type: string
     required: false
     default: "95.45.180.36"
-    title: "Subnet IP- PRIVATE"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+    title: "CL VPN"
+    description: "CL VPN"
 
   v1_cw_vpn:
     type: string
     required: false
     default: "159.134.94.228"
-    title: "Subnet IP- PRIVATE"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+    title: "CW VPN"
+    description: "CW VPN"
 
   cust1_vpn:
     type: string
     required: false
     default: "109.159.193.202"
-    title: "Subnet IP- PRIVATE"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+    title: "cust1 vpn"
+    description: "cust1 vpn
 
   cust2_vpn:
     type: string
     required: false
     default: "109.159.193.203"
-    title: "Subnet IP- PRIVATE"
-    description: "Choose single, contiguous IPv4 CIDR block for the Subnet"
+    title: "cust2 vpn"
+    description: "cust2 vpn"
 
   v1_cl_domain: 
     type: array
