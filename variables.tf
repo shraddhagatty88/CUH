@@ -208,25 +208,25 @@ locals {
     v1_cl = {
       compartment_id       = module.iam.compartments["common_services"]
       cpe_ip_address       = var.v1_cl_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = [var.v1_cl_domain]
     }
     v1_cw = {
       compartment_id       = module.iam.compartments["common_services"]
       cpe_ip_address       = var.v1_cw_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = [var.v1_cw_domain]
     }
     cust1 = {
       compartment_id       = module.iam.compartments["common_services"]
       cpe_ip_address       = var.cust1_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = var.cust1_domain
     }
     cust2 = {
       compartment_id       = module.iam.compartments["common_services"]
       cpe_ip_address       = var.cust2_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_vcn_drg"]
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = var.cust2_domain
     }
   }
