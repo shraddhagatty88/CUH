@@ -2,7 +2,7 @@
 # Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl.
 
 ### Creates Scanning recipes and targets. All Landing Zone compartments are potential targets.
-module "lz_scanning" {
+/*module "lz_scanning" {
   source     = "./modules/vss"
   depends_on = [null_resource.slow_down_vss]
   scan_recipes = var.vss_create == true ? {
@@ -56,3 +56,4 @@ resource "null_resource" "slow_down_vss" {
     command = "sleep ${local.delay_in_secs}" # Wait 30 seconds for policies to be available.
   }
 }
+*/

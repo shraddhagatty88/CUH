@@ -1,4 +1,4 @@
-
+/*
 locals {
 
   regions_map         = { for r in data.oci_identity_regions.these.regions : r.key => r.name } # All regions indexed by region key.
@@ -47,3 +47,4 @@ locals {
   delay_in_secs = 70
 
 }
+*/

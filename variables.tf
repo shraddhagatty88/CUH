@@ -413,7 +413,7 @@ variable "access" {
 
 }
 
-
+/*
 ####################################
 #Bastion
 #####################################
@@ -491,3 +491,4 @@ variable "network_admin_email_endpoints" {
     error_message = "Validation failed network_admin_email_endpoints: invalid email address."
   }
 }
+*/
