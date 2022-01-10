@@ -85,15 +85,13 @@ variableGroups:
   - instance_shape_opsview
   - ssh_key_opsview
 
-  - title: "Compute  Configuration(Bastion)"
+- title: "Compute  Configuration(Bastion)"
   visible: 
       and:
         - show_advanced
   variables:
   - instance_shape_bastion
   - ssh_key_bastion
-
-
 
 variables:
 
