@@ -309,12 +309,6 @@ variables:
     title: " Shape Memory (GB)"
     description: "Choose number GB for Shape Memory."
 
-  ssh_key:
-    title: SSH Public Key
-    description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
-    # renders variable as an SSH key control
-    type: oci:core:ssh:publickey
-    required: true
 
 
 # Compute Configuration(OpsView)
