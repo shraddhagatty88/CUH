@@ -32,11 +32,6 @@ variableGroups:
   - ip_vcn
   - ip_sub_dmz
   - ip_sub_private
-  - v1_vpns
-  - cust_vpns
-  - cust_domains
-  - access
-  - v1_domains
   - public_src_bastion_cidrs
 
 - title: "VPN  Configuration"
