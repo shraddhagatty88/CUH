@@ -197,8 +197,8 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for v1 vpns"
-    description: "CIDR Blocks for v1 vpns"
+    title: "V1 CL Domain"
+    description: "V1 CL Domain"
     default: []
 
 
@@ -210,8 +210,8 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for customer vpns"
-    description: "CIDR Blocks for customer vpns"
+    title: "V1 CW Domain"
+    description: "V1 CW Domain"
     default: []
 
   cust1_domain: 
@@ -222,8 +222,8 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "CIDR Blocks for customer domain"
-    description: "CIDR Blocks for customer domain"
+    title: "CIDR Blocks for customer1 domain"
+    description: "CIDR Blocks for customer1 domain"
     default: []
 
 
@@ -235,8 +235,8 @@ variables:
     required: false
     maxItems: 9
     minItems: 1
-    title: "v1_domains "
-    description: "v1_domains"
+    title: "CIDR Blocks for customer2 domain "
+    description: "CIDR Blocks for customer2 domain"
     default: []
 
   access:
