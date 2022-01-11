@@ -274,9 +274,18 @@ variable "backup_policy_opsview" {
 variable instance_shape_opsview {
     default = "VM.Standard.E2.1"
 }
-
+variable "linux_os_version_opsview" {
+  default = "6.10"
+}
 #bastion
 variable "instance_shape_bastion"{default = "VM.Standard.E2.1"}
+
+variable "instance_os" {
+  default = "Oracle Linux"
+}
+variable "linux_os_version_bastion" {
+  default = "7.9"
+}
 
 ###################################
 #DB Specific

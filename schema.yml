@@ -73,6 +73,8 @@ variableGroups:
   - backup_policy_opsview
   - boot_volume_size_in_gbs_opsview
   - instance_shape_opsview
+  - instance_os
+  - linux_os_version_opsview
   - ssh_key_opsview
 
 - title: "Compute  Configuration(Bastion)"
@@ -84,6 +86,7 @@ variableGroups:
   - shape_ocpus
   - shape_mem
   - boot_volume_size_in_gbs
+  - linux_os_version_bastion
   - ssh_key_bastion
 
 variables:
@@ -374,6 +377,27 @@ variables:
     type: oci:core:ssh:publickey
     required: true
 
+  instance_os:
+    type: enum
+    required: false
+    visible: true
+    title: "Instance OS"
+    description: "Choose Operating System that determines the operating system for Webserver host."
+    default: "Oracle Linux"
+    enum:
+      - "Oracle Linux"
+
+  linux_os_version_opsview:
+    type: enum
+    required: false
+    visible: true
+    title: "Instance OS version"
+    description: "Choose Operating System version that determines the operating system version for Webserver host."
+    default: "6.10"
+    enum:
+      - "7.9"  
+      - "6.10"
+
 
 #Bastion
   instance_shape_bastion:
@@ -385,12 +409,26 @@ variables:
     dependsOn:
       compartmentId: ${compartment_id}
   
+
+  linux_os_version_bastion:
+    type: enum
+    required: false
+    visible: true
+    title: "Instance OS version"
+    description: "Choose Operating System version that determines the operating system version for Webserver host."
+    default: "7.9"
+    enum:
+      - "7.9"  
+      - "6.10"
+  
   ssh_key_bastion:
     title: SSH Public Key
     description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
     # renders variable as an SSH key control
     type: oci:core:ssh:publickey
     required: true
+
+  
   
 
  # DB Configuration
