@@ -56,16 +56,10 @@ variableGroups:
   - data_storage_size_in_gb
   - db_shapes
   - db_shape_ocpus
-  - ssh_key_db
   - db_shape_mem
-
-- title: "Compute  Configuration (DB)"
-  visible: 
-      and:
-        - show_advanced
-  variables:
   - availablity_domain
   - backup_policy
+  - ssh_key_db
 
 
 - title: "Compute  Configuration(OPSVIEW Monitoring)"
@@ -87,10 +81,10 @@ variableGroups:
         - show_advanced
   variables:
   - instance_shape_bastion
-  - ssh_key_bastion
   - shape_ocpus
   - shape_mem
   - boot_volume_size_in_gbs
+  - ssh_key_bastion
 
 variables:
 
