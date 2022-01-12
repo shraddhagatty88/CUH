@@ -1,7 +1,7 @@
 ############################################################################
 # Instance - V1 OpsView:
 ############################################################################
-
+/*
 module "instance_opsview" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
@@ -24,3 +24,4 @@ module "instance_opsview" {
   defined_tags            = local.tags
 }
 ############################################################################
+*/
