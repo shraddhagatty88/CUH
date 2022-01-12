@@ -23,10 +23,12 @@ locals {
     common_services = {
       compartment_compartment = var.tenancy_ocid
       compartment_description = "${var.customer_label} Common Services"
+      compartment_name = "${var.customer_label}_common_services"
     }
     prod_services = {
       compartment_compartment = var.tenancy_ocid
       compartment_description = "${var.customer_label} Production Services"
+      compartment_name = "${var.customer_label}_production_services"
     }
   }
   tag_namespaces = {

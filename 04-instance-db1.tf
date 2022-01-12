@@ -5,8 +5,8 @@
 module "instance_test_db1" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
-  display_name            = "${var.customer_label}db1"
-  vnic_hostname_label     = "${var.customer_label}db1"
+  display_name            = "${var.customer_label}-ebs-archive01"
+  vnic_hostname_label     = "${var.customer_label}-ebs-archive01"
   shape                   = var.db_shapes
   shape_ocpus             = var.db_shape_ocpus
   shape_mem               = var.db_shape_mem

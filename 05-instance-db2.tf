@@ -5,8 +5,8 @@
 module "instance_test_db2" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
-  display_name            = "${var.customer_label}db2"
-  vnic_hostname_label     = "${var.customer_label}db2"
+  display_name            = "${var.customer_label}-bacs01"
+  vnic_hostname_label     = "${var.customer_label}-bacs01"
   shape                   = var.db_shapes
   shape_ocpus             = var.db_shape_ocpus
   shape_mem               = var.db_shape_mem
