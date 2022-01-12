@@ -260,7 +260,7 @@ variables:
     visibile: true
     title: "Availability Domain to be chosen"
     description: "Choose Availability Domain where your application will be deployed."
-    default: "3"
+    default: "2"
     enum:
       - "1"
       - "2"
