@@ -6,14 +6,14 @@
 module "instance_bastion" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
-  display_name            = "${var.customer_label}bastion"
-  vnic_hostname_label     = "${var.customer_label}bastion"
+  display_name            = "${var.customer_label}_bastion"
+  vnic_hostname_label     = "${var.customer_label}_bastion"
   shape                   = var.instance_shape_bastion
   shape_ocpus             = var.shape_ocpus
   shape_mem               = var.shape_mem
   availability_domain     = var.availablity_domain
   fault_domain            = 1
-  compartment_id          = module.iam.compartments["common_services"]
+  compartment_id          = module.iam.compartments["finance_common_services"]
   subnet_id               = module.vcn.subnets["vcn1_sub_dmz"]
   network_sec_groups      = [oci_core_network_security_group.nsg_access.id,oci_core_network_security_group.nsg_v1_vpn.id, oci_core_network_security_group.nsg_prod_common.id]
   ssh_authorized_keys     = var.ssh_key_bastion

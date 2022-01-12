@@ -20,20 +20,20 @@ variable "compartment_id" {}
 
 locals {
   compartments = {
-    common_services = {
+    finance_common_services = {
       compartment_compartment = var.tenancy_ocid
       compartment_description = "${var.customer_label} Common Services"
-      compartment_name = "${var.customer_label}_common_services"
+
     }
-    prod_services = {
+    finance_prod_services = {
       compartment_compartment = var.tenancy_ocid
       compartment_description = "${var.customer_label} Production Services"
-      compartment_name = "${var.customer_label}_production_services"
+      
     }
   }
   tag_namespaces = {
     Billing = {
-      tag_namespace_compartment_id = module.iam.compartments["common_services"]
+      tag_namespace_compartment_id = module.iam.compartments["finance_common_services"]
       tag_namespace_description    = "Namespace for Billing tags"
       tags = {
         CostCentre = {
@@ -51,7 +51,7 @@ locals {
       }
     }
     Account = {
-      tag_namespace_compartment_id = module.iam.compartments["common_services"]
+      tag_namespace_compartment_id = module.iam.compartments["finance_common_services"]
       tag_namespace_description    = "Namespace for Account tags"
       tags = {
         StackName = {
@@ -127,7 +127,7 @@ locals {
     vcn1 = {
       vcn_dns_label      = "${var.customer_label}vcn"
       vcn_cidr_block     = var.ip_vcn
-      vcn_compartment_id = module.iam.compartments["common_services"]
+      vcn_compartment_id = module.iam.compartments["finance_common_services"]
       vcn_defined_tags   = local.tags
       subnets = {
         dmz = {
@@ -208,25 +208,25 @@ locals {
 locals {
   vpns = {
     v1_cl = {
-      compartment_id       = module.iam.compartments["common_services"]
+      compartment_id       = module.iam.compartments["finance_common_services"]
       cpe_ip_address       = var.v1_cl_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = [var.v1_cl_domain]
     }
     v1_cw = {
-      compartment_id       = module.iam.compartments["common_services"]
+      compartment_id       = module.iam.compartments["finance_common_services"]
       cpe_ip_address       = var.v1_cw_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = [var.v1_cw_domain]
     }
     cust1 = {
-      compartment_id       = module.iam.compartments["common_services"]
+      compartment_id       = module.iam.compartments["finance_common_services"]
       cpe_ip_address       = var.cust1_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = var.cust1_domain
     }
     cust2 = {
-      compartment_id       = module.iam.compartments["common_services"]
+      compartment_id       = module.iam.compartments["finance_common_services"]
       cpe_ip_address       = var.cust2_vpn
       ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
       ip_sec_static_routes = var.cust2_domain

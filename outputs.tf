@@ -2,8 +2,8 @@
 # Outputs:
 ############################################################################
 
-output "common_services_compartment_id" {
-  value = module.iam.compartments["common_services"]
+output "finance_common_services_compartment_id" {
+  value = module.iam.compartments["finance_common_services"]
 }
 
 output "prod_services_compartment_id" {
