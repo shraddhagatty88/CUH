@@ -7,7 +7,7 @@ output "finance_common_services_compartment_id" {
 }
 
 output "prod_services_compartment_id" {
-  value = module.iam.compartments["prod_services"]
+  value = module.iam.compartments["finance_prod_services"]
 }
 
 
