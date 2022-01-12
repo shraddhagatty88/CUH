@@ -40,37 +40,10 @@ locals {
           tag_description      = "Internal Cost Centre"
           tag_is_cost_tracking = true
         }
-        Workload = {
-          tag_description      = "Workload Type"
-          tag_is_cost_tracking = true
-        }
-        Environment = {
-          tag_description      = "Environment Type"
-          tag_is_cost_tracking = true
-        }
+      
       }
     }
-    Account = {
-      tag_namespace_compartment_id = module.iam.compartments["finance_common_services"]
-      tag_namespace_description    = "Namespace for Account tags"
-      tags = {
-        StackName = {
-          tag_description      = "Product/Environment title"
-        }
-        StackOwner = {
-          tag_description      = "Product Owner"
-        }
-        ProjectName = {
-          tag_description      = "Internal project title"
-        }
-        BillingOwner = {
-          tag_description      = "Full name of person who administers this instance"
-        }
-        CompartmentName = {
-          tag_description      = "The compartment the resource belongs to"
-        }
-      }
-    }
+   
   }
 }
 
@@ -80,14 +53,7 @@ locals {
 
 locals {
   tags = {
-    "Account.StackName"          = ""
-    "Account.StackOwner"         = ""
-    "Account.ProjectName"        = ""
-    "Account.BillingOwner"       = ""
-    "Account.CompartmentName"    = ""
-    "Billing.CostCentre"         = ""
-    "Billing.Workload"           = ""
-    "Billing.Environment"        = ""
+   "Billing.CostCentre"         = ""
   }
 }
 
