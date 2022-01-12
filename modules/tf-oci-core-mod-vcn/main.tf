@@ -16,7 +16,7 @@ resource "oci_core_vcn" "vcn" {
     cidr_block     = each.value.vcn_cidr_block
     compartment_id = each.value.vcn_compartment_id
 
-    defined_tags   = each.value.vcn_defined_tags  
+   # defined_tags   = each.value.vcn_defined_tags  
     freeform_tags  = each.value.vcn_freeform_tags 
 
    /* lifecycle {
@@ -108,7 +108,7 @@ resource "oci_core_nat_gateway" "nat_gateway" {
     compartment_id = oci_core_vcn.vcn[each.key].compartment_id
     vcn_id         = oci_core_vcn.vcn[each.key].id
     block_traffic  = each.value.nat_block_traffic
-    defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
+    #defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_nat"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
     public_ip_id   = each.value.nat_public_ip_id
@@ -145,7 +145,7 @@ resource "oci_core_service_gateway" "service_gateway" {
     services {
         service_id = data.oci_core_services.core_services.services[0]["id"]
     }
-    defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
+    #defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_sgw"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
     route_table_id = each.value.sgw_route_table_id
@@ -170,7 +170,7 @@ resource "oci_core_drg" "drg" {
     }
 
     compartment_id = oci_core_vcn.vcn[each.key].compartment_id
-    defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
+    #defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_drg"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
 /*
@@ -204,7 +204,7 @@ resource "oci_core_remote_peering_connection" "remote_peering_connection" {
     }
     compartment_id   = oci_core_vcn.vcn[each.key].compartment_id
     drg_id           = oci_core_drg.drg[each.key].id
-    defined_tags     = oci_core_vcn.vcn[each.key].defined_tags
+    #defined_tags     = oci_core_vcn.vcn[each.key].defined_tags
     display_name     = "${oci_core_vcn.vcn[each.key].display_name}_rpg"
     freeform_tags    = oci_core_vcn.vcn[each.key].freeform_tags
     peer_id          = each.value.rpg_peer_id
@@ -230,7 +230,7 @@ resource "oci_core_local_peering_gateway" "local_peering_gateway" {
     }
     compartment_id = oci_core_vcn.vcn[each.key].compartment_id
     vcn_id         = oci_core_vcn.vcn[each.key].id
-    defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
+    #defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_lpg"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
     peer_id        = each.value.lpg_peer_id
@@ -258,7 +258,7 @@ resource "oci_core_subnet" "subnet" {
     compartment_id             = oci_core_vcn.vcn[each.value.input_key].compartment_id
     vcn_id                     = oci_core_vcn.vcn[each.value.input_key].id
     availability_domain        = each.value.subnet_availability_domain
-    defined_tags               = oci_core_vcn.vcn[each.value.input_key].defined_tags
+    #defined_tags               = oci_core_vcn.vcn[each.value.input_key].defined_tags
     dhcp_options_id            = each.value.subnet_dhcp_options_id
     display_name               = "${oci_core_vcn.vcn[each.value.input_key].display_name}_sub_${each.value.subnet_key}"
     dns_label                  = each.value.subnet_dns_label
@@ -289,7 +289,7 @@ resource "oci_core_route_table" "route_table" {
     compartment_id = oci_core_vcn.vcn[each.value.input_key].compartment_id
     vcn_id         = oci_core_vcn.vcn[each.value.input_key].id
     display_name   = "${oci_core_vcn.vcn[each.value.input_key].display_name}_rt_${each.value.route_table_key}"
-    defined_tags   = oci_core_vcn.vcn[each.value.input_key].defined_tags
+   # defined_tags   = oci_core_vcn.vcn[each.value.input_key].defined_tags
     freeform_tags  = oci_core_vcn.vcn[each.value.input_key].freeform_tags
     
     dynamic "route_rules" {
