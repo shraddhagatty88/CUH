@@ -1,7 +1,7 @@
 ############################################################################
 # TEST - EBS International Database:
 ############################################################################
-
+/*
 module "instance_test_db1" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
@@ -73,3 +73,4 @@ resource "oci_core_volume_attachment" "instance_test_ebs_db1_VG02_attach" {
 }
 
 ############################################################################
+*/
