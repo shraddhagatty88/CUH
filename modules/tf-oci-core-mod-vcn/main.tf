@@ -19,14 +19,14 @@ resource "oci_core_vcn" "vcn" {
     defined_tags   = each.value.vcn_defined_tags  
     freeform_tags  = each.value.vcn_freeform_tags 
 
-    lifecycle {
+   /* lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
             defined_tags["Oracle-Tags.CreatedOn"],
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -85,7 +85,7 @@ resource "oci_core_internet_gateway" "internet_gateway" {
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_igw"
     defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -93,7 +93,7 @@ resource "oci_core_internet_gateway" "internet_gateway" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -112,7 +112,7 @@ resource "oci_core_nat_gateway" "nat_gateway" {
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_nat"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
     public_ip_id   = each.value.nat_public_ip_id
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -120,7 +120,7 @@ resource "oci_core_nat_gateway" "nat_gateway" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -149,7 +149,7 @@ resource "oci_core_service_gateway" "service_gateway" {
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_sgw"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
     route_table_id = each.value.sgw_route_table_id
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -157,7 +157,7 @@ resource "oci_core_service_gateway" "service_gateway" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -173,7 +173,7 @@ resource "oci_core_drg" "drg" {
     defined_tags   = oci_core_vcn.vcn[each.key].defined_tags
     display_name   = "${oci_core_vcn.vcn[each.key].display_name}_drg"
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -181,7 +181,7 @@ resource "oci_core_drg" "drg" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 resource "oci_core_drg_attachment" "drg_attachment" {
@@ -209,7 +209,7 @@ resource "oci_core_remote_peering_connection" "remote_peering_connection" {
     freeform_tags    = oci_core_vcn.vcn[each.key].freeform_tags
     peer_id          = each.value.rpg_peer_id
     peer_region_name = each.value.rpg_peer_region_name
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -217,7 +217,7 @@ resource "oci_core_remote_peering_connection" "remote_peering_connection" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -235,7 +235,7 @@ resource "oci_core_local_peering_gateway" "local_peering_gateway" {
     freeform_tags  = oci_core_vcn.vcn[each.key].freeform_tags
     peer_id        = each.value.lpg_peer_id
     route_table_id = each.value.lpg_route_table_id
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -243,7 +243,7 @@ resource "oci_core_local_peering_gateway" "local_peering_gateway" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -267,7 +267,7 @@ resource "oci_core_subnet" "subnet" {
     prohibit_public_ip_on_vnic = each.value.subnet_is_private
     route_table_id             = each.value.subnet_route_table != null ? oci_core_route_table.route_table[each.value.subnet_route_table].id : each.value.subnet_route_table
     security_list_ids          = each.value.subnet_security_list_ids
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -275,7 +275,7 @@ resource "oci_core_subnet" "subnet" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################
@@ -301,7 +301,7 @@ resource "oci_core_route_table" "route_table" {
             destination_type  = route_rules.value.route_rule_destination_type
         }
     }
-
+/*
     lifecycle {
         ignore_changes = [
             defined_tags["Oracle-Tags.CreatedBy"],
@@ -309,7 +309,7 @@ resource "oci_core_route_table" "route_table" {
             defined_tags["Account.Created_By"],
             defined_tags["Account.Created_At"],
         ]
-    }
+    }*/
 }
 
 ############################################################################

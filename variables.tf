@@ -40,10 +40,10 @@ locals {
           tag_description      = "Internal Cost Centre"
           tag_is_cost_tracking = true
         }
-      
+       
       }
     }
-   
+ 
   }
 }
 
@@ -53,7 +53,9 @@ locals {
 
 locals {
   tags = {
-   "Billing.CostCentre"         = ""
+   
+    "Billing.CostCentre"         = ""
+   
   }
 }
 
