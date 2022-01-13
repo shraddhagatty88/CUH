@@ -44,8 +44,8 @@ data "oci_cloud_guard_cloud_guard_configuration" "this" {
 data "oci_core_images" "OSImage_bastion" {
   compartment_id           = var.compartment_id
   operating_system         = var.instance_os_bastion
-  operating_system_version = var.os_version_bastion
-  shape                    = var.instance_shape_bastion
+  #operating_system_version = var.os_version_bastion
+  #shape                    = var.instance_shape_bastion
 
   filter {
     name   = "display_name"
@@ -62,7 +62,7 @@ data "oci_core_images" "OSImage_opsview" {
 
   filter {
     name   = "display_name"
-    values = ["^.*Oracle[^G]*$"]
+    values = ["^Windows-Server-2016-Standard-Edition-VM-Gen2-([\\.0-9-]+)$"]
     regex  = true
   }
 }

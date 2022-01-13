@@ -215,9 +215,7 @@ variable "instance_shape_bastion"{default = "VM.Standard.E2.1"}
 variable "instance_os_bastion" {
   default = "Oracle Linux"
 }
-variable "os_version_bastion" {
-  default = "7.9"
-}
+
 /*
 ###################################
 #DB Specific

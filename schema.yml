@@ -69,7 +69,6 @@ variableGroups:
   - shape_mem
   - boot_volume_size_in_gbs
   - instance_shape_bastion
-  - os_version_bastion
   - ssh_key_bastion
 
 variables:
@@ -371,21 +370,12 @@ variables:
     visible: true
     title: "Instance OS"
     description: "Choose Operating System that determines the operating system for Webserver host."
-    default: "Oracle Linux"
+    default: "Windows"
     enum:
       - "Oracle Linux"
-      - "Windows Server"
+      - "Windows"
 
-  os_version_bastion:
-    type: enum
-    required: false
-    visible: true
-    title: "Instance OS version"
-    description: "Choose Operating System version that determines the operating system version for Webserver host."
-    default: "7.9"
-    enum:
-      - "7.9"  
-      - "6.10"
+  
   
   ssh_key_bastion:
     title: SSH Public Key
