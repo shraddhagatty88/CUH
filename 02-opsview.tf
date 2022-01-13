@@ -16,7 +16,7 @@ module "instance_opsview" {
   subnet_id               = module.vcn.subnets["vcn1_sub_dmz"]
   network_sec_groups      = [oci_core_network_security_group.nsg_access.id,oci_core_network_security_group.nsg_v1_vpn.id, oci_core_network_security_group.nsg_prod_common.id]
   ssh_authorized_keys     = file(local.ssh_keys["access"])
-  source_id               = data.oci_core_images.OSImage_opsview.id
+  source_id               = data.oci_core_images.OSImage_opsview.images[0].id
   boot_volume_size_in_gbs = 100
   assign_public_ip        = true
   #private_ip              = [local.ips.instances["opsView"]]
