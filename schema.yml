@@ -65,7 +65,6 @@ variableGroups:
   - instance_shape_bastion
   - shape_ocpus
   - shape_mem
-  - boot_volume_size_in_gbs
   - instance_shape_bastion
   - ssh_key_bastion
   - instance_os_bastion
@@ -231,14 +230,6 @@ variables:
 
 
   
-  boot_volume_size_in_gbs:
-    type: number
-    required: false
-    multipleOf: 1
-    default: 100
-    title: " Shape Memory (GB)"
-    description: "Choose number GB for Shape Memory."
-
 
 
 # Compute Configuration(OpsView)
@@ -280,7 +271,7 @@ variables:
     type: number
     required: false
     multipleOf: 1
-    default: 256
+    default: 100
     title: " Shape Memory (GB)"
     description: "Choose number GB for Shape Memory."
 
