@@ -208,6 +208,10 @@ variable "instance_shape_bastion"{default = "VM.Standard.E2.1"}
 variable "instance_os_bastion" {
   default = "Oracle Linux"
 }
+variable "boot_volume_size_in_gbs_bastion" {
+  default = 100
+}
+
 
 /*
 ###################################

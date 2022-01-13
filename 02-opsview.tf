@@ -17,7 +17,7 @@ module "instance_opsview" {
   network_sec_groups      = [oci_core_network_security_group.nsg_access.id,oci_core_network_security_group.nsg_v1_vpn.id, oci_core_network_security_group.nsg_prod_common.id]
   ssh_authorized_keys     = var.ssh_key_opsview
   source_id               = "ocid1.image.oc1.uk-london-1.aaaaaaaadnd7ecwvymv2o7ewyj2avndyaukr5mlqderbjgvh55mzgb7tuqra"
-  boot_volume_size_in_gbs = 100
+  boot_volume_size_in_gbs = var.boot_volume_size_in_gbs_opsview
   assign_public_ip        = true
   #private_ip              = [local.ips.instances["opsView"]]
   boot_backup_policy      = "silver"

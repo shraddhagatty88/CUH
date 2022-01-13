@@ -18,7 +18,7 @@ module "instance_bastion" {
   network_sec_groups      = [oci_core_network_security_group.nsg_access.id,oci_core_network_security_group.nsg_v1_vpn.id, oci_core_network_security_group.nsg_prod_common.id]
   ssh_authorized_keys     = var.ssh_key_bastion
   source_id               = "ocid1.image.oc1.uk-london-1.aaaaaaaar3xlcex3lvy7rumdn6faglsjrsqgk6ifqbvud5nuc6wlwkkzohpa"
-  boot_volume_size_in_gbs = 100
+  boot_volume_size_in_gbs = var.boot_volume_size_in_gbs_bastion
   assign_public_ip        = true
   #private_ip              = [local.ips.instances["opsView"]]
   boot_backup_policy      = "silver"

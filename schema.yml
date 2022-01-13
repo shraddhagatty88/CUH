@@ -69,6 +69,7 @@ variableGroups:
   - instance_shape_bastion
   - ssh_key_bastion
   - instance_os_bastion
+  - boot_volume_size_in_gbs_bastion
 
 variables:
 
@@ -279,7 +280,7 @@ variables:
     type: number
     required: false
     multipleOf: 1
-    default: 100
+    default: 256
     title: " Shape Memory (GB)"
     description: "Choose number GB for Shape Memory."
 
@@ -322,6 +323,14 @@ variables:
     required: false
     dependsOn:
       compartmentId: ${compartment_id}
+
+  boot_volume_size_in_gbs_bastion:
+    type: number
+    required: false
+    multipleOf: 1
+    default: 256
+    title: " Shape Memory (GB)"
+    description: "Choose number GB for Shape Memory."
   
   instance_os_bastion:
     type: enum
