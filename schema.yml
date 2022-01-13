@@ -53,9 +53,9 @@ variableGroups:
   - shape_mem_opsview
   - boot_volume_size_in_gbs_opsview
   - instance_shape_opsview
-  - instance_os
   - os_version_opsview
   - ssh_key_opsview
+  - instance_os_opsview
 
 - title: "Compute  Configuration(Bastion)"
   visible: 
@@ -68,6 +68,7 @@ variableGroups:
   - boot_volume_size_in_gbs
   - instance_shape_bastion
   - ssh_key_bastion
+  - instance_os_bastion
 
 variables:
 
