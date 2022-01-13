@@ -17,7 +17,7 @@ module "instance_bastion" {
   subnet_id               = module.vcn.subnets["vcn1_sub_dmz"]
   network_sec_groups      = [oci_core_network_security_group.nsg_access.id,oci_core_network_security_group.nsg_v1_vpn.id, oci_core_network_security_group.nsg_prod_common.id]
   ssh_authorized_keys     = file(local.ssh_keys["access"])
-  source_id               = data.oci_core_images.OSImage_bastion.id
+  source_id               = data.oci_core_images.OSImage_bastion.images[0].id
   boot_volume_size_in_gbs = 100
   assign_public_ip        = true
   #private_ip              = [local.ips.instances["opsView"]]
