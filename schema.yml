@@ -49,10 +49,8 @@ variableGroups:
       and:
         - show_advanced
   variables:
-  - availablity_domain_opsview
   - shape_ocpus_opsview
   - shape_mem_opsview
-  - backup_policy_opsview
   - boot_volume_size_in_gbs_opsview
   - instance_shape_opsview
   - instance_os
@@ -208,18 +206,6 @@ variables:
 
 # Compute Configuration
   
-  availablity_domain:
-    type: enum
-    required: true
-    visibile: true
-    title: "Availability Domain to be chosen"
-    description: "Choose Availability Domain where your application will be deployed."
-    default: "2"
-    enum:
-      - "1"
-      - "2"
-      - "3"
-
 
   shape_ocpus:
     type: number
@@ -241,16 +227,7 @@ variables:
     title: " Shape Memory (GB)"
     description: "Choose number GB for Shape Memory."
 
-  backup_policy:
-    type: enum
-    required: false
-    title: "backup policy"
-    description: "choose backup policy for instances"
-    default: "silver"
-    enum:
-      - "silver"
-      - "bronze"
-      - "gold"
+
   
   boot_volume_size_in_gbs:
     type: number
@@ -264,17 +241,7 @@ variables:
 
 # Compute Configuration(OpsView)
   
-  availablity_domain_opsview:
-    type: enum
-    required: true
-    visibile: true
-    title: "Availability Domain to be chosen"
-    description: "Choose Availability Domain where your application will be deployed."
-    default: "1"
-    enum:
-      - "1"
-      - "2"
-      - "3"
+
 
   instance_shape_opsview:
     type: oci:core:instanceshape:name
@@ -305,16 +272,7 @@ variables:
     title: " Shape Memory (GB)"
     description: "Choose number GB for Shape Memory."
 
-  backup_policy_opsview:
-    type: enum
-    required: false
-    title: "backup policy"
-    description: "choose backup policy for instances"
-    default: "silver"
-    enum:
-      - "silver"
-      - "bronze"
-      - "gold"
+
   
   boot_volume_size_in_gbs_opsview:
     type: number

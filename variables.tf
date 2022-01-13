@@ -179,14 +179,9 @@ variable "shape_mem" {
   default = 16
 }
 
-variable "backup_policy" {
-  default = "silver"
-}
 
 #Opsview
-variable "availablity_domain_opsview" {
-  default = "1"
-}
+
 variable "shape_ocpus_opsview" {
   default = 1
 }
@@ -196,9 +191,7 @@ variable "shape_mem_opsview" {
 variable "boot_volume_size_in_gbs_opsview" {
   default = 100
 }
-variable "backup_policy_opsview" {
-  default = "silver"
-}
+
 variable instance_shape_opsview {
     default = "VM.Standard.E2.1"
 }
@@ -225,7 +218,6 @@ variable "db_shapes" {}
 variable "db_shape_ocpus" { }
 variable "db_shape_mem" { }
 variable "data_storage_size_in_gb" { }
-
 */
 #SSH Keys
 ####################################
@@ -381,10 +373,7 @@ variable "network_admin_email_endpoints" {
 locals {
 
 
-  ssh_keys = {
-    access = "./files/shrar.pub"
-  }
-
+ 
 v1_vpns = ["${var.v1_cl_vpn}","${var.v1_cw_vpn}"]
 cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
 v1_domains = flatten([var.v1_cl_domain, var.v1_cw_domain])
@@ -392,12 +381,13 @@ cust_domains = flatten([var.cust1_domain, var.cust2_domain])
 
 }
 
+/*
 variable "v1_cl_vpn" {}
 variable "v1_cw_vpn" {}
-
-
 variable "cust1_vpn" {}
 variable "cust2_vpn" {}
+*/
+
 
 variable "v1_cl_domain" {
   type        = list(string)
@@ -431,7 +421,7 @@ variable "access" {
 ############################################################################
 # VPN:
 ############################################################################
-
+/*
 locals {
   vpns = {
     v1_cl = {
@@ -464,3 +454,4 @@ locals {
 ############################################################################
 
 ############################################################################
+*/
