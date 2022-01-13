@@ -7,8 +7,8 @@ module "instance_bastion" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
   display_name            = "${var.customer_label}_bastion"
-  vnic_hostname_label     = "${var.customer_label}_bastion"
-  shape                   = "VM.Standard.E2.1"
+  vnic_hostname_label     = "${var.customer_label}bastion"
+  shape                   = var.instance_shape_bastion
   shape_ocpus             = 1
   shape_mem               = 8
   availability_domain     = 2
@@ -16,7 +16,7 @@ module "instance_bastion" {
   compartment_id          = module.iam.compartments["finance_common_services"]
   subnet_id               = module.vcn.subnets["vcn1_sub_dmz"]
   network_sec_groups      = [oci_core_network_security_group.nsg_access.id,oci_core_network_security_group.nsg_v1_vpn.id, oci_core_network_security_group.nsg_prod_common.id]
-  ssh_authorized_keys     = file(local.ssh_keys["access"])
+  ssh_authorized_keys     = var.ssh_key_bastion
   source_id               = data.oci_core_images.OSImage_bastion.images[0].id
   boot_volume_size_in_gbs = 100
   assign_public_ip        = true

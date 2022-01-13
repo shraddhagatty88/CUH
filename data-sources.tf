@@ -43,9 +43,9 @@ data "oci_cloud_guard_cloud_guard_configuration" "this" {
 # Images DataSource
 data "oci_core_images" "OSImage_bastion" {
   compartment_id           = var.compartment_id
-  operating_system         = "Oracle Linux"
-  operating_system_version = "6.10"
-  shape                    = "VM.Standard.E2.1"
+  operating_system         = var.instance_os_bastion
+  operating_system_version = var.os_version_bastion
+  shape                    = var.instance_shape_bastion
 
   filter {
     name   = "display_name"
@@ -56,9 +56,9 @@ data "oci_core_images" "OSImage_bastion" {
 
 data "oci_core_images" "OSImage_opsview" {
   compartment_id           = var.compartment_id
-  operating_system         = "Oracle Linux"
-  operating_system_version = "7.9"
-  shape                    = "VM.Standard.E2.1"
+  operating_system         = var.instance_os_opsview
+  operating_system_version = var.os_version_opsview
+  shape                    = var.instance_shape_opsview
 
   filter {
     name   = "display_name"

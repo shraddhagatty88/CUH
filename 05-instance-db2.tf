@@ -1,16 +1,16 @@
 ############################################################################
-# TEST - EBS International Database:
+#  EBS  Database 2:
 ############################################################################
 /*
 module "instance_test_db2" {
   source                  = "./modules/core_instance"
   tenancy_id              = var.tenancy_ocid
   display_name            = "${var.customer_label}-bacs01"
-  vnic_hostname_label     = "${var.customer_label}-bacs01"
+  vnic_hostname_label     = "${var.customer_label}bacs01"
   shape                   = var.db_shapes
   shape_ocpus             = var.db_shape_ocpus
   shape_mem               = var.db_shape_mem
-  availability_domain     = 2
+  availability_domain     = 1
   fault_domain            = 3
   compartment_id          = module.iam.compartments["finance_prod_services"]
   subnet_id               = module.vcn.subnets["vcn1_sub_private"]

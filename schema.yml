@@ -37,30 +37,12 @@ variableGroups:
       and:
         - show_advanced
   variables:
-  - v1_cl_vpn
-  - v1_cw_vpn
-  - cust1_vpn
-  - cust2_vpn
   - v1_cl_domain
   - v1_cw_domain
   - cust1_domain
   - cust2_domain
   - access
  
-
-- title: "Database Configuration"
-  visible: 
-      and:
-        - show_advanced
-  variables:
-  - data_storage_size_in_gb
-  - db_shapes
-  - db_shape_ocpus
-  - db_shape_mem
-  - availablity_domain
-  - backup_policy
-  - ssh_key_db
-
 
 - title: "Compute  Configuration(OPSVIEW Monitoring)"
   visible: 
@@ -74,7 +56,7 @@ variableGroups:
   - boot_volume_size_in_gbs_opsview
   - instance_shape_opsview
   - instance_os
-  - linux_os_version_opsview
+  - os_version_opsview
   - ssh_key_opsview
 
 - title: "Compute  Configuration(Bastion)"
@@ -86,7 +68,8 @@ variableGroups:
   - shape_ocpus
   - shape_mem
   - boot_volume_size_in_gbs
-  - linux_os_version_bastion
+  - instance_shape_bastion
+  - os_version_bastion
   - ssh_key_bastion
 
 variables:
@@ -160,34 +143,6 @@ variables:
 
 
 # VPN Configuration
-
-  v1_cl_vpn:
-    type: string
-    required: false
-    default: "95.45.180.36"
-    title: "CL VPN"
-    description: "CL VPN"
-
-  v1_cw_vpn:
-    type: string
-    required: false
-    default: "159.134.94.228"
-    title: "CW VPN"
-    description: "CW VPN"
-
-  cust1_vpn:
-    type: string
-    required: false
-    default: "109.159.193.202"
-    title: "cust1 vpn"
-    description: "cust1 vpn"
-
-  cust2_vpn:
-    type: string
-    required: false
-    default: "109.159.193.203"
-    title: "cust2 vpn"
-    description: "cust2 vpn"
 
   v1_cl_domain: 
     type: array
@@ -377,7 +332,7 @@ variables:
     type: oci:core:ssh:publickey
     required: true
 
-  instance_os:
+  instance_os_opsview:
     type: enum
     required: false
     visible: true
@@ -386,8 +341,9 @@ variables:
     default: "Oracle Linux"
     enum:
       - "Oracle Linux"
+      - "Windows Server"
 
-  linux_os_version_opsview:
+  os_version_opsview:
     type: enum
     required: false
     visible: true
@@ -409,8 +365,18 @@ variables:
     dependsOn:
       compartmentId: ${compartment_id}
   
+  instance_os_bastion:
+    type: enum
+    required: false
+    visible: true
+    title: "Instance OS"
+    description: "Choose Operating System that determines the operating system for Webserver host."
+    default: "Oracle Linux"
+    enum:
+      - "Oracle Linux"
+      - "Windows Server"
 
-  linux_os_version_bastion:
+  os_version_bastion:
     type: enum
     required: false
     visible: true
@@ -430,52 +396,5 @@ variables:
 
   
   
-
- # DB Configuration
-  
-  data_storage_size_in_gb:
-    type: number
-    required: false
-    default: 100
-    title: "Database storage size in GB"
-    description: "Choose database storage size in GB for your DBSystem."
-
-  db_shapes:
-    type: oci:core:instanceshape:name
-    title: "Instance Shape"
-    description: "Choose a shape for your instance"
-    default: "VM.Standard.E2.2"
-    required: false
-    dependsOn:
-      compartmentId: ${compartment_id}
-
-
-  ssh_key_db:
-    title: SSH Public Key
-    description: The public SSH key for the key-pair that you want to use, if you wish to login to the instances over SSH
-    # renders variable as an SSH key control
-    type: oci:core:ssh:publickey
-    required: true
-
-  db_shape_ocpus:
-    type: number
-    required: false
-    minimum: 1
-    maximum: 128
-    multipleOf: 1
-    default: 2
-    title: " Shape OCPUs"
-    description: "Choose number of OCPUs for Shape."
-
-  db_shape_mem:
-    type: number
-    required: false
-    minimum: 1
-    maximum: 128
-    multipleOf: 1
-    default: 16
-    title: "DB Shape Mem"
-    description: "DB Shape Mem"
-
 
  

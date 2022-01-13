@@ -59,8 +59,6 @@ locals {
   }
 }
 
-
-
 ############################################################################
 # Instances:
 ############################################################################
@@ -169,58 +167,18 @@ locals {
   }
 }
 
-############################################################################
-# VPN:
-############################################################################
-
-locals {
-  vpns = {
-    v1_cl = {
-      compartment_id       = module.iam.compartments["finance_common_services"]
-      cpe_ip_address       = var.v1_cl_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
-      ip_sec_static_routes = [var.v1_cl_domain]
-    }
-    v1_cw = {
-      compartment_id       = module.iam.compartments["finance_common_services"]
-      cpe_ip_address       = var.v1_cw_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
-      ip_sec_static_routes = [var.v1_cw_domain]
-    }
-    cust1 = {
-      compartment_id       = module.iam.compartments["finance_common_services"]
-      cpe_ip_address       = var.cust1_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
-      ip_sec_static_routes = var.cust1_domain
-    }
-    cust2 = {
-      compartment_id       = module.iam.compartments["finance_common_services"]
-      cpe_ip_address       = var.cust2_vpn
-      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
-      ip_sec_static_routes = var.cust2_domain
-    }
-  }
-}
-
-############################################################################
-
-############################################################################
 
 
 #Compute Specific
 #######################################
-variable "availablity_domain" {
-  default = "3"
-}
+#
 variable "shape_ocpus" {
   default = 2
 }
 variable "shape_mem" {
   default = 16
 }
-variable "boot_volume_size_in_gbs" {
-  default = 100
-}
+
 variable "backup_policy" {
   default = "silver"
 }
@@ -244,19 +202,23 @@ variable "backup_policy_opsview" {
 variable instance_shape_opsview {
     default = "VM.Standard.E2.1"
 }
-variable "linux_os_version_opsview" {
+variable "os_version_opsview" {
   default = "6.10"
+}
+
+variable "instance_os_opsview" {
+  default = "Oracle Linux"
 }
 #bastion
 variable "instance_shape_bastion"{default = "VM.Standard.E2.1"}
 
-variable "instance_os" {
+variable "instance_os_bastion" {
   default = "Oracle Linux"
 }
-variable "linux_os_version_bastion" {
+variable "os_version_bastion" {
   default = "7.9"
 }
-
+/*
 ###################################
 #DB Specific
 #########################################
@@ -266,10 +228,10 @@ variable "db_shape_ocpus" { }
 variable "db_shape_mem" { }
 variable "data_storage_size_in_gb" { }
 
-
+*/
 #SSH Keys
 ####################################
-variable "ssh_key_db" {}
+#variable "ssh_key_db" {}
 variable "ssh_key_opsview"{}
 variable "ssh_key_bastion"{}
 
@@ -332,90 +294,6 @@ locals {
     }
       */
   }
-
-}
-###########################################
-#VPN
-###########################################
-locals {
-
-
-  ssh_keys = {
-    access = "./files/shrar.pub"
-  }
-
-v1_vpns = ["${var.v1_cl_vpn}","${var.v1_cw_vpn}"]
-cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
-v1_domains = flatten([var.v1_cl_domain, var.v1_cw_domain])
-cust_domains = flatten([var.cust1_domain, var.cust2_domain])
-
-}
-
-variable "v1_cl_vpn" {}
-variable "v1_cw_vpn" {}
-
-
-variable "cust1_vpn" {}
-variable "cust2_vpn" {}
-
-variable "v1_cl_domain" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = []
-}
-variable "v1_cw_domain" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = []
-}
-
-variable "cust1_domain" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = []
-}
-variable "cust2_domain" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = []
-}
-/*
-variable "cust_vpns"{
-  type        = list(string)
-  description = "List of customer vpns"
-  default     = []
-}
-variable "v1_vpns" {
-  type        = list(string)
-  description = "List of version 1 vpns"
-  default     = []
-  
-}
-
-variable "v1_domains" {
-  type        = list(string)
-  description = "V1 Domain"
-  default     = [] 
-}
-
-variable "cust_domains" {
-  type        = list(string)
-  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
-  default     = [] 
-}
-
-
-v1_vpns = ["${var.v1_cl}","${var.v1_cw}"]
-cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
-v1_domains = flatten(var.v1_cl_domain, var.v1_cw_domain)
-cust_domains = flatten(var.cust1_domin, var.cust2.domain)
-
-*/
-variable "access" {
-
-  type        = list(string)
-  description = "List of access IPs allowed to connect "
-  default     = []
 
 }
 
@@ -498,3 +376,93 @@ variable "network_admin_email_endpoints" {
   }
 }
 */
+
+###########################################
+#VPN
+###########################################
+locals {
+
+
+  ssh_keys = {
+    access = "./files/shrar.pub"
+  }
+
+v1_vpns = ["${var.v1_cl_vpn}","${var.v1_cw_vpn}"]
+cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
+v1_domains = flatten([var.v1_cl_domain, var.v1_cw_domain])
+cust_domains = flatten([var.cust1_domain, var.cust2_domain])
+
+}
+
+variable "v1_cl_vpn" {}
+variable "v1_cw_vpn" {}
+
+
+variable "cust1_vpn" {}
+variable "cust2_vpn" {}
+
+variable "v1_cl_domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+variable "v1_cw_domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+
+variable "cust1_domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+variable "cust2_domain" {
+  type        = list(string)
+  description = "List of on-premises CIDR blocks allowed to connect to the Landing Zone network via a DRG."
+  default     = []
+}
+
+variable "access" {
+
+  type        = list(string)
+  description = "List of access IPs allowed to connect "
+  default     = []
+
+}
+############################################################################
+# VPN:
+############################################################################
+
+locals {
+  vpns = {
+    v1_cl = {
+      compartment_id       = module.iam.compartments["finance_common_services"]
+      cpe_ip_address       = var.v1_cl_vpn
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
+      ip_sec_static_routes = [var.v1_cl_domain]
+    }
+    v1_cw = {
+      compartment_id       = module.iam.compartments["finance_common_services"]
+      cpe_ip_address       = var.v1_cw_vpn
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
+      ip_sec_static_routes = [var.v1_cw_domain]
+    }
+    cust1 = {
+      compartment_id       = module.iam.compartments["finance_common_services"]
+      cpe_ip_address       = var.cust1_vpn
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
+      ip_sec_static_routes = var.cust1_domain
+    }
+    cust2 = {
+      compartment_id       = module.iam.compartments["finance_common_services"]
+      cpe_ip_address       = var.cust2_vpn
+      ip_sec_drg_id        = module.vcn.drgs["vcn1_drg"]
+      ip_sec_static_routes = var.cust2_domain
+    }
+  }
+}
+
+############################################################################
+
+############################################################################
