@@ -374,8 +374,8 @@ locals {
 
 
  
-v1_vpns = ["${var.v1_cl_vpn}","${var.v1_cw_vpn}"]
-cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
+#v1_vpns = ["${var.v1_cl_vpn}","${var.v1_cw_vpn}"]
+#cust_vpns = ["${var.cust1_vpn}","${var.cust2_vpn}"]
 v1_domains = flatten([var.v1_cl_domain, var.v1_cw_domain])
 cust_domains = flatten([var.cust1_domain, var.cust2_domain])
 
