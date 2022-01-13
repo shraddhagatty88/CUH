@@ -3,8 +3,8 @@
 ###########################################################################
 
 resource "oci_core_network_security_group" "nsg_prod_db" {
-    compartment_id = module.iam.compartments["common_services"]
-    vcn_id         = module.vcn.vcns["gmp_vcn"]
+    compartment_id = module.iam.compartments["finance_common_services"]
+    vcn_id         = module.vcn.vcns["vcn1"]
     display_name   = "nsg_prod_db"
     #defined_tags   = local.tags
     lifecycle {
